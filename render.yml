@@ -1,5 +1,11 @@
 buildCommand: |
   npm install
   npx @puppeteer/browsers install chrome@stable
+  npx @puppeteer/browsers install chrome@116.0.5793.0
 
+  # Download the latest available ChromeDriver version corresponding to the Canary channel.
+  npx @puppeteer/browsers install chromedriver@canary
+
+  # Download a specific ChromeDriver version.
+  npx @puppeteer/browsers install chromedriver@116.0.5793.0
 startCommand: node index.js
