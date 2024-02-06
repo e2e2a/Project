@@ -42,7 +42,7 @@ module.exports.index = async (req, res) => {
         }
         const outputPath = path.join(outputFolderPath, `${savedRequestNameString}.pdf`);
 
-        const chromeExecutablePath = '/chrome/linux-121.0.6167.85/chrome-linux64/chrome.exe'; 
+        const chromeExecutablePath = '/opt/render/project/src/chrome/linux-121.0.6167.85/chrome-linux64/chrome.exe'; 
         console.log('Chrome executable path:', chromeExecutablePath);
         const browser = await puppeteer.launch({
             executablePath: chromeExecutablePath
