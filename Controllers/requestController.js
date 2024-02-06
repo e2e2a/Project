@@ -43,18 +43,12 @@ module.exports.index = async (req, res) => {
         const outputPath = path.join(outputFolderPath, `${savedRequestNameString}.pdf`);
 
         const chromeExecutablePath = '/opt/render/project/src/chrome/linux-121.0.6167.85/chrome-linux64/chrome.exe'; 
-        console.log('Chrome executable path:', chromeExecutablePath);
-        const browser = await puppeteer.launch({
-            executablePath: chromeExecutablePath
-          });
-          console.log('browser:', browser)
-        // Create a new page
-        const page = await browser.newPage();
-
-        // Set the HTML content of the page
-        await page.setContent(html);
-
-        // Generate PDF
+        
+        
+        try {
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            // Generate PDF
         await page.pdf({
             path: outputPath,
             format: 'A4',
@@ -67,6 +61,13 @@ module.exports.index = async (req, res) => {
         savedRequest.formURL = formURL;
         await savedRequest.save();
         return res.redirect('/');
+        // Set the HTML content of the page
+        await page.setContent(html);
+            // rest of your code...
+        } catch (error) {
+            console.error('Error launching browser:', error);
+        }
+        
     } catch (error) {
         console.error('Internal Server Error:', error);
         return res.status(500).send('Internal Server Error');
