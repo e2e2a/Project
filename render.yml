@@ -1,0 +1,5 @@
+buildCommand: |
+  npm install
+  npx @puppeteer/browsers install chrome@stable
+
+startCommand: node index.js
