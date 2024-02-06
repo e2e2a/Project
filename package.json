@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "postinstall": "npx puppeteer browsers install chrome"
+    "postinstall": "sudo yum -y install libXScrnSaver-1.2.2-6.1.el7.x86_64"
   },
   "keywords": [],
   "author": "",

@@ -45,12 +45,19 @@ module.exports.index = async (req, res) => {
         const chromeExecutablePath = '/opt/render/.cache/puppeteer/chrome/win64-121.0.6167.85/chrome-win64/linux-121.0.6167.85/chrome.exe'; 
         console.log('Chrome executable path:', chromeExecutablePath);
         const browser = await puppeteer.launch({
+            args: [
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+                "--no-zygote",
+              ],
+            headless: true,
             executablePath: chromeExecutablePath
           });
         // Create a new page
         
         try {
-            const browser = await puppeteer.launch();
+            
             const page = await browser.newPage();
             // Generate PDF
         await page.pdf({
