@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const puppeteer = require('puppeteer');
+const puppeteerConfig = require('../puppeteer.config.cjs');
 const ejs = require('ejs');
 const reqForm = require('../models/request');
 const User = require('../models/user');
@@ -44,20 +45,21 @@ module.exports.index = async (req, res) => {
 
         const chromeExecutablePath = './node_modules/@puppeteer/browser/src/browser-data/chrome'; 
         console.log('Chrome executable path:', chromeExecutablePath);
-        const browser = await puppeteer.launch({
-            args: [
-                "--disable-setuid-sandbox",
-                "--no-sandbox",
-                "--single-process",
-                "--no-zygote",
-              ],
-            headless: true
-            
-          });
-        // Create a new page
+        
         
         try {
-            
+            const browser = await puppeteer.launch({
+                ...puppeteerConfig,
+                args: [
+                    "--disable-setuid-sandbox",
+                    "--no-sandbox",
+                    "--single-process",
+                    "--no-zygote",
+                  ],
+                headless: true
+                
+              });
+            // Create a new page
             const page = await browser.newPage();
             // Generate PDF
         await page.pdf({
