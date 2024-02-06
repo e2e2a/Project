@@ -8,11 +8,8 @@ const flash = require('express-flash');
 const User = require('./models/user')
 const  startServer  = require('./database/UserCreated');
 
-
-
 const app = express();
 const conn = dbConnect();
-
 
 app.use(session({ secret: 'sessionsecret777' ,resave: false,
 saveUninitialized: true,}));

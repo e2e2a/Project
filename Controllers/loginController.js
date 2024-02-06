@@ -4,16 +4,17 @@ const User = require('../models/user');
 module.exports.index = (req,res) => {
     res.render('login', {
         site_title: SITE_TITLE,
-        title: 'Login'
+        title: 'Login',
+        messages: req.flash(),
     })
 }
 
 module.exports.submit = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
-
         if (!user) {
-            return res.status(400).send('Invalid email');
+            req.flash('error', 'Invalid Email.');
+            return res.status(400).redirect('/login');
         }
 
         user.comparePassword(req.body.password, (error, valid) => {
@@ -21,7 +22,8 @@ module.exports.submit = async (req, res) => {
                 return res.status(403).send('Forbidden');
             }
             if (!valid) {
-                return res.status(400).send('Invalid password');
+                req.flash('error', 'Password does not match.');
+                return res.status(400).redirect('/login');
             }
             req.session.login = user.id;
             res.redirect('/');

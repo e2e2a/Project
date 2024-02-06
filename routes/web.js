@@ -9,6 +9,9 @@ module.exports = function(app){
     app.post('/login', loginController.submit);
     app.post('/logout', loginController.logout);
     //Utilities
+    app.get('/alert', (req,res) => {
+        res.render('alert')
+    })
     app.get('/typo', (req,res) => {
         res.render('typo')
     })
