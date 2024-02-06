@@ -57,26 +57,27 @@ module.exports.index = async (req, res) => {
                     "--no-zygote",
                   ],
                 headless: true
-                
               });
+
             // Create a new page
             const page = await browser.newPage();
+
+            // Set the HTML content of the page
+            await page.setContent(html);
+
             // Generate PDF
-        await page.pdf({
-            path: outputPath,
-            format: 'A4',
-            printBackground: true,
-        });
+            await page.pdf({
+                path: outputPath,
+                format: 'A4',
+                printBackground: true,
+            });
 
-        await browser.close();
+            await browser.close();
 
-        console.log('PDF generated successfully');
-        savedRequest.formURL = formURL;
-        await savedRequest.save();
-        return res.redirect('/');
-        // Set the HTML content of the page
-        await page.setContent(html);
-            // rest of your code...
+            console.log('PDF generated successfully');
+            savedRequest.formURL = formURL;
+            await savedRequest.save();
+            return res.redirect('/');
         } catch (error) {
             console.error('Error launching browser:', error);
         }
