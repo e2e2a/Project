@@ -2,3 +2,5 @@
 
 --request list 
     -findById & -findOne
+
+-users_edit
