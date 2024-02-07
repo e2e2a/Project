@@ -32,7 +32,11 @@ var schema = mongoose.Schema({
         type: Number,
         required: true
     },
-
+    status: {
+        type: String,
+        required: true
+    },
+    
 }, {
     versionKey: false,
     timestamps: true

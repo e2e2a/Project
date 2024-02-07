@@ -1,4 +1,3 @@
-const SITE_TITLE = '';
 const Vehicle = require('../models/vehicle');
 
 module.exports.doCreate = (req, res) => {
@@ -15,6 +14,7 @@ module.exports.doCreate = (req, res) => {
                     type: type,
                     category: category,
                     qty: req.body.qty,
+                    status: 'available'
                 });
                 data.save().then(() => {
                     console.log('success', data)
@@ -35,6 +35,7 @@ module.exports.doCreate = (req, res) => {
                     type: type,
                     category: category,
                     qty: req.body.qty,
+                    status: 'available'
                 });
                 data.save().then(() => {
                     console.log('success', data)
@@ -55,6 +56,7 @@ module.exports.doCreate = (req, res) => {
                 type: type,
                 category: category,
                 qty: req.body.qty,
+                status: 'available'
             });
             data.save().then(() => {
                 console.log('success', data)
@@ -75,6 +77,7 @@ module.exports.doCreate = (req, res) => {
                 type: type,
                 category: category,
                 qty: req.body.qty,
+                status: 'available'
             });
             data.save().then(() => {
                 console.log('success', data)
