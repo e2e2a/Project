@@ -1,6 +1,7 @@
 const indexController = require('../Controllers/indexController');
 const requestController = require('../Controllers/requestController');
 const loginController = require('../Controllers/loginController');
+const vehicleController = require('../Controllers/vehicleController');
 module.exports = function(app){
 
     app.get('/', indexController.index);
@@ -8,6 +9,7 @@ module.exports = function(app){
     app.get('/login', loginController.index);
     app.post('/login', loginController.submit);
     app.post('/logout', loginController.logout);
+    app.post('/create/vehicle', vehicleController.doCreate)
     //Utilities
     app.get('/alert', (req,res) => {
         res.render('alert')

@@ -15,7 +15,8 @@ module.exports.index = async (req,res) => {
             user: user,
             reqForm: reqForm,
             reqForms: reqForms,
-            allOptions, selectedOptions: user.selectedOptions
+            allOptions, selectedOptions: user.selectedOptions,
+            messages: req.flash(),
             
         })
     }else{

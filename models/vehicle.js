@@ -1,4 +1,7 @@
 var mongoose = require("mongoose");
+const allCategory = [
+    'Motorcycle Vehicles', 'Heavy Equipment Vehicles', 'Military Vehicles', '4-Wheel Vehicles'
+]
 var schema = mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -16,16 +19,17 @@ var schema = mongoose.Schema({
         type: String,
         required: true
     },
-    color: {
-        type: String,
-        trim: false
-    },
     type: {
         type: String,
         required: true
     },
     category: {
         type: String,
+        enum: allCategory,
+        required: true
+    },
+    qty: {
+        type: Number,
         required: true
     },
 

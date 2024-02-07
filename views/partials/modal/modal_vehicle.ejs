@@ -1,5 +1,6 @@
 <!-- modal scroll -->
-<div class="modal fade" id="createVehicle" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+<div class="modal fade" id="createVehicle" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,19 +9,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" >
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="row form-group">
-                        <div class="col-12 col-md-9">
-                            <p class="form-control-static text-center">THIS IS A MESSAGE</p>
+            <div class="modal-body">
+                <form action="create/vehicle" method="post" class="form-horizontal">
+                    <% if (messages.error) { %>
+                        <div class="row form-group">
+                            <div class="col-12 col-md-9">
+                                <p class="form-control-static text-center alert"><%= messages.error %></p>
+                            </div>
                         </div>
-                    </div>
+                    <% } %>
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="brand" class=" form-control-label">brand</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="brand" name="brand" placeholder="Brand" class="form-control">
+                            <input type="text" id="brand" name="brand" placeholder="Brand" class="form-control" required/>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -28,23 +31,17 @@
                             <label for="model" class=" form-control-label">Model</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="model" name="model" placeholder="Model" class="form-control">
+                            <input type="text" id="model" name="model" placeholder="Model" class="form-control" required/>
                         </div>
                     </div>
+                    <input type="hidden" id="qty" name="qty" placeholder="" value="1" class="form-control">
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="plateNumber" class=" form-control-label">Plate Number</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="plateNumber" name="plateNumber" placeholder="Plate Number" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="color" class=" form-control-label">Color</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="color" name="color" placeholder="Color" class="form-control">
+                            <input type="text" id="plateNumber" name="plateNumber" placeholder="Plate Number"
+                                class="form-control" required/>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -52,10 +49,10 @@
                             <label for="category" class=" form-control-label">Category</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="category" id="category" class="form-control" onchange="showTypes()">
-                                <option disabled selected>Please select</option>
-                                <option value="Motorcycles Vehicles">Motorcycles Vehicles</option>
-                                <option value="Heavy Equipments Vehicles">Heavy Equipments Vehicles </option>
+                            <select name="category" id="category" class="form-control" onchange="showTypes()" required>
+                                <option value="" disabled selected hidden> Select Options</option>
+                                <option value="Motorcycle Vehicles">Motorcycle Vehicles</option>
+                                <option value="Heavy Equipment Vehicles">Heavy Equipment Vehicles </option>
                                 <option value="Military Vehicles">Military Vehicles</option>
                                 <option value="4-Wheel Vehicles">4-Wheel Vehicles</option>
                             </select>
@@ -64,11 +61,11 @@
                     <!-- Types of Motorcycles Vehicles -->
                     <div id="MotorcycleTypes" class="row form-group" style="display: none;">
                         <div class="col col-md-3">
-                            <label for="typeMotor" class=" form-control-label">Type</label>
+                            <label for="typeMotor" class=" form-control-label">Vehicle Type</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="typeMotor" id="typeMotor" class="form-control">
-                                <option disabled selected>Please select</option>
+                            <select name="typeMotor" id="typeMotor" class="form-control" required>
+                                <option value="" disabled selected hidden>Please select</option>
                                 <option value="Scooter">Scooter</option>
                                 <option value="Touring">Touring</option>
                                 <option value="Cruiser">Cruiser</option>
@@ -89,11 +86,11 @@
                     <!-- Types of Heavy Equipments Vehicles -->
                     <div id="HeavyTypes" class="row form-group" style="display: none;">
                         <div class="col col-md-3">
-                            <label for="typeHeavy" class=" form-control-label">Type</label>
+                            <label for="typeHeavy" class=" form-control-label">Vehicle Type</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="typeHeavy" id="typeHeavy" class="form-control">
-                                <option disabled selected>Please select</option>
+                            <select name="typeHeavy" id="typeHeavy" class="form-control" required>
+                                <option value="" disabled selected hidden>Please select</option>
                                 <option value="Articulated Truck">Articulated Truck</option>
                                 <option value="Backhoe">Backhoe</option>
                                 <option value="Bulldozer">Bulldozer</option>
@@ -118,11 +115,11 @@
                     <!-- Types of Military Vehicles -->
                     <div id="MilitaryTypes" class="row form-group" style="display: none;">
                         <div class="col col-md-3">
-                            <label for="typeMilitary" class=" form-control-label">Type</label>
+                            <label for="typeMilitary" class=" form-control-label">Vehicle Type</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="typeMilitary" id="typeMilitary" class="form-control">
-                                <option disabled selected>Please select</option>
+                            <select name="typeMilitary" id="typeMilitary" class="form-control" required>
+                                <option value="" disabled selected hidden>Please select</option>
                                 <option value="Armoured Personnel Carrier">Armoured Personnel Carrier</option>
                                 <option value="Fighting Vehicles">Fighting Vehicle</option>
                                 <option value="Tank">Tank</option>
@@ -144,11 +141,11 @@
                     <!-- Types of 4-Wheel Vehicles -->
                     <div id="WheelTypes" class="row form-group" style="display: none;">
                         <div class="col col-md-3">
-                            <label for="typeWheel" class=" form-control-label">Type</label>
+                            <label for="typeWheel" class=" form-control-label">Vehicle Type</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="typeWheel" id="typeWheel" class="form-control">
-                                <option disabled selected>Please select</option>
+                            <select name="typeWheel" id="typeWheel" class="form-control" required>
+                                <option value="" disabled selected hidden>Please select</option>
                                 <option value="Automobile">Automobile</option>
                                 <option value="Ambulance">Ambulance</option>
                                 <option value="ATV">ATV</option>
@@ -158,43 +155,58 @@
                                 <option value="Jeep">Jeep</option>
                                 <option value="Carriage">Carriage</option>
                                 <option value="Van">Van</option>
-                                
                             </select>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" >Cancel</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <script>
     function showTypes() {
-        const category = document.getElementById("category").value;
-        const motorcycleTypes = document.getElementById("MotorcycleTypes");
-        const heavyTypes = document.getElementById("HeavyTypes");
-        const MilitaryTypes = document.getElementById("MilitaryTypes");
-        const WheelTypes = document.getElementById("WheelTypes");
+    const category = document.getElementById("category").value;
+    //options
+    const motorcycleTypes = document.getElementById("MotorcycleTypes");
+    const heavyTypes = document.getElementById("HeavyTypes");
+    const MilitaryTypes = document.getElementById("MilitaryTypes");
+    const WheelTypes = document.getElementById("WheelTypes");
+    // Hide all types initially
+    motorcycleTypes.style.display = "none";
+    heavyTypes.style.display = "none";
+    MilitaryTypes.style.display = "none";
+    WheelTypes.style.display = "none";
 
-        // Hide all types initially
-        motorcycleTypes.style.display = "none";
-        heavyTypes.style.display = "none";
-        MilitaryTypes.style.display = "none";
-        WheelTypes.style.display = "none";
-
-        // Show types based on selected category
-        if (category === "Motorcycles Vehicles") {
-            motorcycleTypes.style.display = "flex";
-        } else if (category === "Heavy Equipments Vehicles") {
-            heavyTypes.style.display = "flex";
-            }else if (category === "Military Vehicles") {
-                MilitaryTypes.style.display = "flex";
-                }else if (category === "4-Wheel Vehicles") {
-                    WheelTypes.style.display = "flex";
-                    }
+    // Show types based on selected category
+    if (category === "Motorcycle Vehicles") {
+        motorcycleTypes.style.display = "flex";
+        document.getElementById("typeMotor").setAttribute("required", "true");
+    } else {
+        document.getElementById("typeMotor").removeAttribute("required");
+    }
+    if (category === "Heavy Equipment Vehicles") {
+        heavyTypes.style.display = "flex";
+        document.getElementById("typeHeavy").setAttribute("required", "true");
+    } else {
+        document.getElementById("typeHeavy").removeAttribute("required");
+    }
+    if (category === "Military Vehicles") {
+        MilitaryTypes.style.display = "flex";
+        document.getElementById("typeMilitary").setAttribute("required", "true");
+    } else {
+        document.getElementById("typeMilitary").removeAttribute("required");
+    }
+    if (category === "4-Wheel Vehicles") {
+        WheelTypes.style.display = "flex";
+        document.getElementById("typeWheel").setAttribute("required", "true");
+    } else {
+        document.getElementById("typeWheel").removeAttribute("required");
+    }
     }
 </script>
 <!-- end modal scroll -->
