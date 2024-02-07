@@ -29,13 +29,23 @@
                                                 Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
                                                 Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
                                                 <br/> <br/>
-                                                <p style="font-weight: bold;">Catergory:</p>
-                                                <% for (let option of allOptions) { %>
-                                                    <label style="margin: 0.5rem">  
-                                                       <input type="checkbox" name="selectedOptions" value="<%= option %>" > <% /* if (selectedOptions.includes(option)) { %>checked<% } */ %>
-                                                      <%= option %>
-                                                    </label>
-                                                  <% } %>
+                                                
+                                                <% if (vehicles && vehicles.length > 0) { %>
+                                                    <p style="font-weight: bold;">Categories:</p>
+                                                    <% 
+                                                    const categories = Array.from(new Set(vehicles.map(vehicle => vehicle.category)));
+                                                
+                                                    categories.forEach(category => { %>
+                                                        <p style="font-weight: bold;"><%= category %>:</p>
+                                                        <% vehicles.filter(vehicle => vehicle.category === category).forEach(vehicle => { %>
+                                                            <label style="margin: 0.5rem">
+                                                                <input type="checkbox" name="selectedVehicle" value="<%= String(vehicle._id) %>">
+                                                                <%= vehicle.type %>
+                                                            </label>
+                                                        <% }); %>
+                                                    <% }); %>
+                                                <% } %>
+                                                
                                                 <br/> <br/> <br/>
                                                 Sincerely Yours, <br/>
                                                 <input type="text" name="requestorName" id="requestorName" placeholder="(Requestor Name)" class="border-bottom text-left" style="font-weight: 300; background-color: none; width: 18rem;" required/> 

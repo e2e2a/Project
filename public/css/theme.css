@@ -4646,11 +4646,11 @@ section {
 .status--pending {
     color: #00b5e9;
 }
-.status--process {
+.status--available {
     color: #00ad5f;
 }
 
-.status--denied {
+.status--deployed {
     color: #fa4251;
 }
 

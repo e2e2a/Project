@@ -11,10 +11,15 @@ module.exports.index = async (req, res) => {
         if (!req.session.login) {
             return res.redirect('/login');
         }
+        const selectedVehicleIds = Array.isArray(req.body.selectedVehicle) ? req.body.selectedVehicle : [req.body.selectedVehicle];
+        
+        console.log('Selected Vehicle IDs:', req.body.selectedVehicle);
         const user = await User.findById(req.session.login);
+       
         const formData = new reqForm({
             userId: user._id,
             address: req.body.address,
+            selectedVehicle:selectedVehicleIds,
             city: req.body.city,
             event: req.body.event,
             requestorName: req.body.requestorName,

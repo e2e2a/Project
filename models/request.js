@@ -24,6 +24,7 @@ var schema = mongoose.Schema({
         type: String,
         trim: false
     },
+    selectedVehicle: [{ type: String }], 
     status: {
         type: String,
         required:true

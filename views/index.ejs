@@ -398,16 +398,16 @@
                                     <!-- END DATA TABLE-->
 
                                     <!-- request modal start -->
-                                    <%- include('./partials/modal/modal_request.ejs'); %>
+                                    <%- include('./partials/modal/modal_request.ejs', { vehicles:vehicles}); %>
                                         <!-- request modal end-->
 
 
-                                        <!-- Car List-->
+                                        <!-- Vechicles List-->
                                         <section class="p-t-70">
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <h3 class="title-5 m-b-35">Car List</h3>
+                                                        <h3 class="title-5 m-b-35">Vechicles</h3>
                                                         <div class="table-data__tool">
                                                             <div class="table-data__tool-left">
                                                                 <div class="rs-select2--light rs-select2--md">
@@ -451,191 +451,23 @@
                                                             <table class="table table-data2 text-center">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>#</th>
-                                                                        <th>name</th>
-                                                                        <th>email</th>
-                                                                        <th>description</th>
+                                                                        <th>driver</th>
+                                                                        <th>brand</th>
+                                                                        <th>category</th>
+                                                                        <th>type</th>
+                                                                        <th>model</th>
                                                                         <th>date</th>
                                                                         <th>status</th>
-                                                                        <th>Actions</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr class="tr-shadow">
-                                                                        <td>
-                                                                            <label class="au-checkbox">
-                                                                                <input type="checkbox">
-                                                                                <span class="au-checkmark"></span>
-                                                                            </label>
-                                                                        </td>
-                                                                        <td>Lori Lynch</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="block-email">lori@example.com</span>
-                                                                        </td>
-                                                                        <td class="desc">TYPES OF CAR</td>
-                                                                        <td>2018-09-27 02:12</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="status--process">Available</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="table-data-feature">
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Send">
-                                                                                    <i class="zmdi zmdi-mail-send"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Edit">
-                                                                                    <i class="zmdi zmdi-edit"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Delete">
-                                                                                    <i class="zmdi zmdi-delete"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="More">
-                                                                                    <i class="zmdi zmdi-more"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="spacer"></tr>
-                                                                    <tr class="tr-shadow">
-                                                                        <td>
-                                                                            <label class="au-checkbox">
-                                                                                <input type="checkbox">
-                                                                                <span class="au-checkmark"></span>
-                                                                            </label>
-                                                                        </td>
-                                                                        <td>Lori Lynch</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="block-email">john@example.com</span>
-                                                                        </td>
-                                                                        <td class="desc">TYPES OF CAR</td>
-                                                                        <td>2018-09-29 05:57</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="status--process">Available</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="table-data-feature">
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Send">
-                                                                                    <i class="zmdi zmdi-mail-send"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Edit">
-                                                                                    <i class="zmdi zmdi-edit"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Delete">
-                                                                                    <i class="zmdi zmdi-delete"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="More">
-                                                                                    <i class="zmdi zmdi-more"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="spacer"></tr>
-                                                                    <tr class="tr-shadow">
-                                                                        <td>
-                                                                            <label class="au-checkbox">
-                                                                                <input type="checkbox">
-                                                                                <span class="au-checkmark"></span>
-                                                                            </label>
-                                                                        </td>
-                                                                        <td>Lori Lynch</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="block-email">lyn@example.com</span>
-                                                                        </td>
-                                                                        <td class="desc">TYPES OF CAR</td>
-                                                                        <td>2018-09-25 19:03</td>
-                                                                        <td>
-                                                                            <span class="status--denied">In
-                                                                                Contract</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="table-data-feature">
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Send">
-                                                                                    <i class="zmdi zmdi-mail-send"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Edit">
-                                                                                    <i class="zmdi zmdi-edit"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Delete">
-                                                                                    <i class="zmdi zmdi-delete"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="More">
-                                                                                    <i class="zmdi zmdi-more"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="spacer"></tr>
-                                                                    <tr class="tr-shadow">
-                                                                        <td>
-                                                                            <label class="au-checkbox">
-                                                                                <input type="checkbox">
-                                                                                <span class="au-checkmark"></span>
-                                                                            </label>
-                                                                        </td>
-                                                                        <td>Lori Lynch</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="block-email">doe@example.com</span>
-                                                                        </td>
-                                                                        <td class="desc">TYPES OF CAR</td>
-                                                                        <td>2018-09-24 19:10</td>
-                                                                        <td>
-                                                                            <span
-                                                                                class="status--process">Available</span>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="table-data-feature">
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Send">
-                                                                                    <i class="zmdi zmdi-mail-send"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Edit">
-                                                                                    <i class="zmdi zmdi-edit"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="Delete">
-                                                                                    <i class="zmdi zmdi-delete"></i>
-                                                                                </button>
-                                                                                <button class="item"
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top" title="More">
-                                                                                    <i class="zmdi zmdi-more"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
+                                                                    <% if(vehicle && vehicle.length > 0) { %>
+                                                                        <% vehicle.forEach(vehicle => { %>
+                                                                            <%- include('partials/vehicle/single_vehicle.ejs', {vehicle: vehicle}); %>
+                                                                        <% }); %>
+                                                                    <% } else { %>
+                                                                        <p class="text-center">No Vehicles Available.</p>
+                                                                    <% } %>
                                                                 </tbody>
                                                             </table>
                                                         </div>
