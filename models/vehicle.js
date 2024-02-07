@@ -7,6 +7,9 @@ var schema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', required: true
     },
+    driver: {
+        type: String,
+    },
     brand: {
         type: String,
         required: true

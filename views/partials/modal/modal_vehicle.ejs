@@ -11,13 +11,21 @@
             </div>
             <div class="modal-body">
                 <form action="create/vehicle" method="post" class="form-horizontal">
-                    <% if (messages.error) { %>
+                    <% if (messages.success) { %>
                         <div class="row form-group">
                             <div class="col-12 col-md-9">
-                                <p class="form-control-static text-center alert"><%= messages.error %></p>
+                                <p class="form-control-static text-center alert"><%= messages.success %></p>
                             </div>
                         </div>
                     <% } %>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="driver" class=" form-control-label">driver</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="driver" name="driver" placeholder="Driver Name (Optional)" class="form-control">
+                        </div>
+                    </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="brand" class=" form-control-label">brand</label>

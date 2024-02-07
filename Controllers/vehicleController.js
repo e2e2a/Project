@@ -8,6 +8,7 @@ module.exports.doCreate = (req, res) => {
             const type = req.body.typeMotor;
                 const data = new Vehicle({
                     userId:userId,
+                    driver: req.body.driver,
                     brand: req.body.brand,
                     model: req.body.model,
                     plateNumber: req.body.plateNumber,
@@ -29,6 +30,7 @@ module.exports.doCreate = (req, res) => {
             const type = req.body.typeHeavy;
                 const data = new Vehicle({
                     userId:userId,
+                    driver: req.body.driver,
                     brand: req.body.brand,
                     model: req.body.model,
                     plateNumber: req.body.plateNumber,
@@ -50,6 +52,7 @@ module.exports.doCreate = (req, res) => {
             const type = req.body.typeMilitary;
             const data = new Vehicle({
                 userId:userId,
+                driver: req.body.driver,
                 brand: req.body.brand,
                 model: req.body.model,
                 plateNumber: req.body.plateNumber,
@@ -71,6 +74,7 @@ module.exports.doCreate = (req, res) => {
             const type = req.body.typeWheel;
             const data = new Vehicle({
                 userId:userId,
+                driver: req.body.driver,
                 brand: req.body.brand,
                 model: req.body.model,
                 plateNumber: req.body.plateNumber,
