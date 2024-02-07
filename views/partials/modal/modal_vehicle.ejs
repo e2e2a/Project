@@ -11,13 +11,6 @@
             </div>
             <div class="modal-body">
                 <form action="create/vehicle" method="post" class="form-horizontal">
-                    <% if (messages.success) { %>
-                        <div class="row form-group">
-                            <div class="col-12 col-md-9">
-                                <p class="form-control-static text-center alert"><%= messages.success %></p>
-                            </div>
-                        </div>
-                    <% } %>
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="driver" class=" form-control-label">driver</label>
@@ -177,6 +170,9 @@
 </div>
 
 <script>
+    <% if (messages.success) { %>
+        window.alert('Created Successfully');
+    <% } %>
     function showTypes() {
     const category = document.getElementById("category").value;
     //options

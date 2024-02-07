@@ -65,6 +65,7 @@ module.exports.index = async (req, res) => {
             console.log('PDF generated successfully');
             savedRequest.formURL = formURL;
             await savedRequest.save();
+            req.flash('success', 'Creation Success!')
             return res.redirect('/');
         } catch (error) {
             console.error('Error launching browser:', error);
