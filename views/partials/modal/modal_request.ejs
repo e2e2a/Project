@@ -34,17 +34,48 @@
                                                     <p style="font-weight: bold;">Categories:</p>
                                                     <% 
                                                     const categories = Array.from(new Set(vehicles.map(vehicle => vehicle.category)));
+                                                    categories.forEach(category => {
+                                                        // Filter vehicles by category
+                                                        const vehiclesInCategory = vehicles.filter(vehicle => vehicle.category === category && vehicle.qty > 0);
+                                                        // Group vehicles by type and calculate total quantity for each type
+                                                        const groupedVehicles = vehiclesInCategory.reduce((acc, vehicle) => {
+                                                            if (!acc[vehicle.type]) {
+                                                                acc[vehicle.type] = 0;
+                                                            }
+                                                            acc[vehicle.type] += vehicle.qty;
+                                                            return acc;
+                                                        }, {});
                                                 
-                                                    categories.forEach(category => { %>
+                                                        // Display category if there are any vehicles in it
+                                                        if (vehiclesInCategory.length > 0) {
+                                                    %>
                                                         <p style="font-weight: bold;"><%= category %>:</p>
-                                                        <% vehicles.filter(vehicle => vehicle.category === category).forEach(vehicle => { %>
+                                                        <% 
+                                                        // Loop through grouped vehicles to display each type and its total quantity
+                                                        Object.entries(groupedVehicles).forEach(([type, totalQty]) => {
+                                                        %>
                                                             <label style="margin: 0.5rem">
-                                                                <input type="checkbox" name="selectedVehicle" value="<%= String(vehicle._id) %>">
-                                                                <%= vehicle.type %>
+                                                                <input type="checkbox" name="selectedVehicle" value="<%= String(type) %>">
+                                                                <%= type %> (Total Quantity: <%= totalQty %>)
+                                                                <!-- Select dropdown for quantity -->
+                                                                <select name="qty[<%= type %>]" id="qty">
+                                                                    <% 
+                                                                    // Loop through quantity options based on total quantity
+                                                                    for (let i = 1; i <= totalQty; i++) {
+                                                                    %>
+                                                                        <option value="<%= i %>"><%= i %></option>
+                                                                    <% } %>
+                                                                </select>
                                                             </label>
-                                                        <% }); %>
-                                                    <% }); %>
+                                                        <% 
+                                                        });
+                                                        %>
+                                                    <% 
+                                                        }
+                                                    });
+                                                    %>
                                                 <% } %>
+                                                
                                                 
                                                 <br/> <br/> <br/>
                                                 Sincerely Yours, <br/>

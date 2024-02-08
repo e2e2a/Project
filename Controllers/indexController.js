@@ -10,7 +10,7 @@ module.exports.index = async (req,res) => {
         const user = await User.findById(UserIdlogin);
         const reqForms = await requestedForm.find({userId: user._id});
         const reqForm = await requestedForm.find();
-        const vehicle = await Vehicle.find({userId:UserIdlogin});
+        const vehicle = await Vehicle.find();
         const vehicles = await Vehicle.find();
 //         const selectedVehicleIds = [...new Set(reqForms.flatMap(form => form.selectedVehicle))];
 // console.log(selectedVehicleIds)

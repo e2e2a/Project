@@ -13,14 +13,17 @@ module.exports.index = async (req, res) => {
             return res.redirect('/login');
         }
         const selectedVehicleIds = Array.isArray(req.body.selectedVehicle) ? req.body.selectedVehicle : [req.body.selectedVehicle];
-
-        console.log('Selected Vehicle IDs:', req.body.selectedVehicle);
+        const AllSelectedVehicles = selectedVehicleIds.map(vehicleId => ({
+            vehicleId: vehicleId,
+            qty: req.body.qty[vehicleId] // Assuming qty is sent as an object with vehicle IDs as keys
+        }));
+        console.log('Selected Vehicle IDs:', AllSelectedVehicles);
         const user = await User.findById(req.session.login);
-        
+
         const formData = new reqForm({
             userId: user._id,
             address: req.body.address,
-            selectedVehicle: selectedVehicleIds,
+            selectedVehicle: AllSelectedVehicles,
             city: req.body.city,
             event: req.body.event,
             requestorName: req.body.requestorName,
@@ -30,15 +33,18 @@ module.exports.index = async (req, res) => {
         const savedRequest = await formData.save();
 
         //
-        const allSelectedVehicleIds = [...new Set(savedRequest.selectedVehicle)];
-        // Using $in operator to find vehicles with the extracted IDs
-        const selectedVehicles = await Vehicle.find({ _id: { $in: allSelectedVehicleIds } });
-        console.log(selectedVehicles)
+        // const allSelectedVehicleIds = savedRequest.selectedVehicle.map(vehicle => vehicle.vehicleId);
+        // const selectedVehicles = await Vehicle.find({ 
+        //     type: { $in: allSelectedVehicleIds }, 
+        //     _id: { $nin: allSelectedVehicleIds } // Exclude vehicles not in the selected list
+        // });
+
+        // console.log(selectedVehicles);
         //
 
         const templatePath = path.join(__dirname, '../views/pdf/pdf-template.ejs');
         const templateContent = await fs.readFile(templatePath, 'utf-8');
-        const html = ejs.render(templateContent, { formData, selectedVehicles: selectedVehicles });
+        const html = ejs.render(templateContent, { formData, selectedVehicles: AllSelectedVehicles  });
         const createdBy = user._id.toString();
         const savedRequestIdString = savedRequest._id.toString();
         const savedRequestNameString = savedRequest.requestorName.toString();
@@ -84,8 +90,8 @@ module.exports.index = async (req, res) => {
             const transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'emonawong22@gmail.com', 
-                    pass: 'nouv heik zbln qkhf', 
+                    user: 'emonawong22@gmail.com',
+                    pass: 'nouv heik zbln qkhf',
                 },
             });
 
@@ -94,11 +100,11 @@ module.exports.index = async (req, res) => {
                 try {
                     const pdfBuffer = fs.readFile(outputPath);
 
-                // Convert the PDF buffer to base64
-                const pdfBase64 = pdfBuffer.toString('base64');
+                    // Convert the PDF buffer to base64
+                    const pdfBase64 = pdfBuffer.toString('base64');
 
-                // Construct the data URI for the inline PDF attachment
-                const pdfDataUri = `data:application/pdf;base64,${pdfBase64}`;
+                    // Construct the data URI for the inline PDF attachment
+                    const pdfDataUri = `data:application/pdf;base64,${pdfBase64}`;
                     const mailOptions = {
                         from,
                         to,
@@ -110,7 +116,7 @@ module.exports.index = async (req, res) => {
                                 content: pdfDataUri,
                                 encoding: 'base64',
                                 contentType: 'application/pdf',
-                                path:outputPath
+                                path: outputPath
                             },
                         ],
                     };
@@ -133,10 +139,10 @@ module.exports.index = async (req, res) => {
         `;
 
             sendEmail(
-                `lguk-online.onrender.com <${user.email}>`, 
+                `lguk-online.onrender.com <${user.email}>`,
                 `emoklo101@gmail.com`,
                 'Request Form',
-                emailContent ,
+                emailContent,
                 outputPath
             );
             //end
