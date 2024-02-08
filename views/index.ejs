@@ -462,7 +462,7 @@
                                                                 <tbody>
                                                                     <% if(vehicle && vehicle.length > 0) { %>
                                                                         <% vehicle.forEach(vehicle => { %>
-                                                                            <%- include('partials/vehicle/single_vehicle.ejs', {vehicle: vehicle}); %>
+                                                                            <%- include('./partials/vehicle/single_vehicle.ejs', {vehicle: vehicle}); %>
                                                                         <% }); %>
                                                                     <% } else { %>
                                                                         <p class="text-center">No Vehicles Available.</p>
