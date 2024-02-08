@@ -12,7 +12,11 @@ module.exports.index = async (req,res) => {
         const reqForm = await requestedForm.find();
         const vehicle = await Vehicle.find({userId:UserIdlogin});
         const vehicles = await Vehicle.find();
-        
+//         const selectedVehicleIds = [...new Set(reqForms.flatMap(form => form.selectedVehicle))];
+// console.log(selectedVehicleIds)
+// // Using $in operator to find vehicles with the extracted IDs
+// const selectedVehicles = await Vehicle.find({ _id: { $in: selectedVehicleIds } });
+// console.log(selectedVehicles)
         res.render('index', {
             site_tile: SITE_TITLE,
             title: 'dashboard',

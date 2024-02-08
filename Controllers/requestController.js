@@ -5,7 +5,7 @@ const puppeteerConfig = require('../puppeteer.config.cjs');
 const ejs = require('ejs');
 const reqForm = require('../models/request');
 const User = require('../models/user');
-
+const Vehicle = require('../models/vehicle')
 module.exports.index = async (req, res) => {
     try {
         if (!req.session.login) {
@@ -27,9 +27,17 @@ module.exports.index = async (req, res) => {
         });
 
         const savedRequest = await formData.save();
+
+        //
+        const allSelectedVehicleIds = [...new Set(savedRequest.selectedVehicle)];
+        // Using $in operator to find vehicles with the extracted IDs
+        const selectedVehicles = await Vehicle.find({ _id: { $in: allSelectedVehicleIds } });
+        console.log(selectedVehicles)
+        //
+
         const templatePath = path.join(__dirname, '../views/pdf/pdf-template.ejs');
         const templateContent = await fs.readFile(templatePath, 'utf-8');
-        const html = ejs.render(templateContent, { formData });
+        const html = ejs.render(templateContent, { formData, selectedVehicles:selectedVehicles });
         const createdBy = user._id.toString();
         const savedRequestIdString = savedRequest._id.toString();
         const savedRequestNameString = savedRequest.requestorName.toString();

@@ -20,6 +20,44 @@
             Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
             Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
             <br/> <br/> <br/>
+            <% if (Array.isArray(selectedVehicles) && selectedVehicles.length > 0) { %>
+                <h3 style="margin-bottom: 10px;">Vehicle Requested</h3>
+                <table style="border-collapse: collapse; width: 100%;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="padding: 8px; border: 1px solid #ddd;">Category</th>
+                            <th style="padding: 8px; border: 1px solid #ddd;">Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                            const categories = Array.from(new Set(selectedVehicles.map(selectedVehicle => selectedVehicle.category)));
+                            categories.forEach(category => { %>
+                                <% const vehiclesInCategory = selectedVehicles.filter(selectedVehicle => selectedVehicle.category === category); %>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #ddd;" rowspan="<%= vehiclesInCategory.length %>"><%= category %></td>
+                                    <% vehiclesInCategory.forEach((vehicle, index) => { %>
+                                        <% if (index !== 0) { %>
+                                            <tr>
+                                        <% } %>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><%= vehicle.type %></td>
+                                        <% if (index !== 0) { %>
+                                            </tr>
+                                        <% } %>
+                                    <% }); %>
+                                </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No Requested vehicle available.</p>
+            <% } %>
+            
+            
+            
+            
+            
+            <br/><br/><br/>
             Sincerely Yours, <br/>
             <span style="font-weight: bold;"><%= formData.requestorName %></span> 
             <br/> <br/>
