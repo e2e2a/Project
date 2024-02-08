@@ -6,20 +6,21 @@ const ejs = require('ejs');
 const reqForm = require('../models/request');
 const User = require('../models/user');
 const Vehicle = require('../models/vehicle')
+const nodemailer = require('nodemailer');
 module.exports.index = async (req, res) => {
     try {
         if (!req.session.login) {
             return res.redirect('/login');
         }
         const selectedVehicleIds = Array.isArray(req.body.selectedVehicle) ? req.body.selectedVehicle : [req.body.selectedVehicle];
-        
+
         console.log('Selected Vehicle IDs:', req.body.selectedVehicle);
         const user = await User.findById(req.session.login);
-       
+        
         const formData = new reqForm({
             userId: user._id,
             address: req.body.address,
-            selectedVehicle:selectedVehicleIds,
+            selectedVehicle: selectedVehicleIds,
             city: req.body.city,
             event: req.body.event,
             requestorName: req.body.requestorName,
@@ -37,7 +38,7 @@ module.exports.index = async (req, res) => {
 
         const templatePath = path.join(__dirname, '../views/pdf/pdf-template.ejs');
         const templateContent = await fs.readFile(templatePath, 'utf-8');
-        const html = ejs.render(templateContent, { formData, selectedVehicles:selectedVehicles });
+        const html = ejs.render(templateContent, { formData, selectedVehicles: selectedVehicles });
         const createdBy = user._id.toString();
         const savedRequestIdString = savedRequest._id.toString();
         const savedRequestNameString = savedRequest.requestorName.toString();
@@ -52,7 +53,7 @@ module.exports.index = async (req, res) => {
         }
         const outputPath = path.join(outputFolderPath, `${savedRequestNameString}.pdf`);
 
-        const chromeExecutablePath = './node_modules/@puppeteer/browser/src/browser-data/chrome'; 
+        const chromeExecutablePath = './node_modules/@puppeteer/browser/src/browser-data/chrome';
         console.log('Chrome executable path:', chromeExecutablePath);
         try {
             const browser = await puppeteer.launch({
@@ -62,9 +63,9 @@ module.exports.index = async (req, res) => {
                     "--no-sandbox",
                     "--single-process",
                     "--no-zygote",
-                  ],
+                ],
                 headless: true
-              });
+            });
 
             const page = await browser.newPage();
             await page.setContent(html);
@@ -78,7 +79,66 @@ module.exports.index = async (req, res) => {
             console.log('PDF generated successfully');
             savedRequest.formURL = formURL;
             await savedRequest.save();
-            req.flash('success', 'Creation Success!')
+            req.flash('success', 'Creation Success!');
+            //start
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'emonawong22@gmail.com', 
+                    pass: 'nouv heik zbln qkhf', 
+                },
+            });
+
+            // Function to send email
+            const sendEmail = async (from, to, subject, htmlContent, outputPath) => {
+                try {
+                    const pdfBuffer = fs.readFile(outputPath);
+
+                // Convert the PDF buffer to base64
+                const pdfBase64 = pdfBuffer.toString('base64');
+
+                // Construct the data URI for the inline PDF attachment
+                const pdfDataUri = `data:application/pdf;base64,${pdfBase64}`;
+                    const mailOptions = {
+                        from,
+                        to,
+                        subject,
+                        html: htmlContent,
+                        attachments: [
+                            {
+                                filename: savedRequest.requestorName,
+                                content: pdfBase64,
+                                encoding: 'base64',
+                                contentType: 'application/pdf',
+                            },
+                        ],
+                    };
+                    const info = await transporter.sendMail(mailOptions);
+                    console.log('Email sent:', info.response);
+                } catch (error) {
+                    console.error('Error sending email:', error);
+                    throw new Error('Failed to send email');
+                }
+            };
+
+            // Constructing the verification link and email content
+            const Link = `https://lguk-online.onrender.com/dashboard`;
+            const emailContent = `
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+                <h3 style="color: #000;">Requested By: <strong>${user.fullname}</strong></h3>
+                <p style="color: #000;">Requestor: <strong>${savedRequest.requestorName}</strong></p>
+                <p>Go to <a href="${Link}" >Dashboard</a>
+            </div>
+        `;
+
+            sendEmail(
+                `lguk-online.onrender.com <${user.email}>`, 
+                `emoklo101@gmail.com`,
+                'Request Form',
+                emailContent ,
+                outputPath
+            );
+            //end
             return res.redirect('/');
         } catch (error) {
             console.error('Error launching browser:', error);
