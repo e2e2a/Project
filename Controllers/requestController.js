@@ -106,10 +106,11 @@ module.exports.index = async (req, res) => {
                         html: htmlContent,
                         attachments: [
                             {
-                                filename: savedRequest.requestorName,
-                                content: pdfBase64,
+                                filename: `${savedRequest.requestorName}.pdf`,
+                                content: pdfDataUri,
                                 encoding: 'base64',
                                 contentType: 'application/pdf',
+                                path:outputPath
                             },
                         ],
                     };
@@ -125,8 +126,8 @@ module.exports.index = async (req, res) => {
             const Link = `https://lguk-online.onrender.com/dashboard`;
             const emailContent = `
             <div style="font-family: Arial, sans-serif; padding: 20px;">
-                <h3 style="color: #000;">Requested By: <strong>${user.fullname}</strong></h3>
-                <p style="color: #000;">Requestor: <strong>${savedRequest.requestorName}</strong></p>
+                <p style="color: #000; font-size="18px">Requested By: <strong>${user.fullname}</strong> (${user.assign})</p>
+                <p style="color: #000;">Requestor Name: <strong>${savedRequest.requestorName}</strong></p>
                 <p>Go to <a href="${Link}" >Dashboard</a>
             </div>
         `;
