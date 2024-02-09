@@ -263,7 +263,70 @@
                         </section>
                         <!-- END STATISTIC CHART-->
                         
-
+                                
+                                    <!-- Request List-->
+                                <section class="p-t-20">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h3 class="title-5 m-b-35">Request Process</h3>
+                                                <div class="table-data__tool">
+                                                    <div class="table-data__tool-left">
+                                                        <div class="rs-select2--light rs-select2--md">
+                                                            <select class="js-select2" name="property">
+                                                                <option selected="selected">All Properties</option>
+                                                                <option value="">Option 1</option>
+                                                                <option value="">Option 2</option>
+                                                            </select>
+                                                            <div class="dropDownSelect2"></div>
+                                                        </div>
+                                                        <div class="rs-select2--light rs-select2--sm">
+                                                            <select class="js-select2" name="time">
+                                                                <option selected="selected">Today</option>
+                                                                <option value="">3 Days</option>
+                                                                <option value="">1 Week</option>
+                                                            </select>
+                                                            <div class="dropDownSelect2"></div>
+                                                        </div>
+                                                        <button class="au-btn-filter">
+                                                            <i class="zmdi zmdi-filter-list"></i>filters</button>
+                                                    </div>
+                                                </div>
+                                                <div class="table-responsive table-responsive-data2">
+                                                    <table class="table table-data2 text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Requestor</th>
+                                                                <th>email</th>
+                                                                <th>date</th>
+                                                                <th>form</th>
+                                                                <th>status</th>
+                                                                <th>requested by</th>
+                                                                <th>Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <!-- request && modal Loop start -->
+                                                            <% if(reqForms && reqForms.length> 0) { %>
+                                                                <% reqForms.forEach(reqForm=> { %>
+                                                                    <% if(reqForm.status === 'process') { %>
+                                                                    <%- include('partials/request_form/creator_single_form_remove.ejs',
+                                                                        {reqForm: reqForm}); %>
+                                                                    <% }%>
+                                                                <% }); %>
+                                                            <% } else { %>
+                                                                <p>No request Found.</p>
+                                                            <% } %>
+                                                            <!-- request && modal Loop end -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <!-- END DATA request list TABLE-->
+                                
                                 <!-- Request List-->
                                 <section class="p-t-20">
                                     <div class="container">
@@ -309,12 +372,13 @@
                                                             <!-- request && modal Loop start -->
                                                             <% if(reqForms && reqForms.length> 0) { %>
                                                                 <% reqForms.forEach(reqForm=> { %>
-                                                                    <%- include('partials/request_form/creator_single_form.ejs',
-                                                                        {reqForm: reqForm}); %>
-                                                                        <% }); %>
-                                                                            <% } else { %>
-                                                                                <p>No request Found.</p>
-                                                                                <% } %>
+                                                                    <% if(reqForm.status === 'pending'){ %>
+                                                                    <%- include('partials/request_form/creator_single_form.ejs', {reqForm: reqForm}); %>
+                                                                    <% } %>
+                                                                <% }); %>
+                                                            <% } else { %>
+                                                                <p>No request Found.</p>
+                                                            <% } %>
                                                                                     <!-- request && modal Loop end -->
                                                         </tbody>
                                                     </table>
@@ -323,7 +387,7 @@
                                         </div>
                                     </div>
                                 </section>
-                                <!-- END DATA TABLE-->
+                                <!-- END DATA request list TABLE-->
 
                                 <!-- request modal start -->
                                 <%- include('./partials/modal/modal_request.ejs', { vehicles:vehicles}); %>
@@ -341,10 +405,19 @@
                                                                 <select id="categorySelect" class="js-select2" name="property" onchange="filterVehicles()">
                                                                     <option  value="All Categories" >All Categories
                                                                     </option>
-                                                                    <option value="Motorcycle Vehicles">Motorcycle Vehicles</option>
-                                                                    <option value="Military Vehicles">Military Vehicles</option>
-                                                                    <option value="Heavy Equipment Vehicles">Heavy Equipment Vehicles</option>
-                                                                    <option value="4-Wheel Vehicles">4-Wheel Vehicles</option>
+                                                                    <option value="Motorcycle Vehicles">Motorcycle</option>
+                                                                    <option value="Military Vehicles">Military</option>
+                                                                    <option value="Heavy Equipment Vehicles">Heavy Equipment</option>
+                                                                    <option value="4-Wheel Vehicles">4-Wheel</option>
+                                                                </select>
+                                                                <div class="dropDownSelect2"></div>
+                                                            </div>
+                                                            <div class="rs-select2--light rs-select2--sm">
+                                                                <select id="statusSelect" class="js-select2" name="time" onchange="filterVehicles()">
+                                                                    <option value="All Status">All Status</option>
+                                                                    <option value="available">Available</option>
+                                                                    <option value="deployed">Deployed</option>
+                                                                    <option value="process">Process</option>
                                                                 </select>
                                                                 <div class="dropDownSelect2"></div>
                                                             </div>
@@ -375,9 +448,8 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <% vehicles.forEach(vehicle=> { %>
-                                                                        <%- include('./partials/vehicle/creator_single_vehicle.ejs',
-                                                                            {vehicle: vehicle}); %>
-                                                                            <% }); %>
+                                                                        <%- include('./partials/vehicle/creator_single_vehicle.ejs', {vehicle: vehicle}); %>
+                                                                    <% }); %>
                                                                 </tbody>
                                                             </table>
                                                         </div>
@@ -388,27 +460,7 @@
                                     <% } else { %>
                                         <p class="text-center">No Vehicles Available.</p>
                                         <% } %>
-                                        <script>
-                                             function filterVehicles() {
-                                            const selectedCategory = document.getElementById('categorySelect').value;
-
-                                            const rows = document.querySelectorAll('#vehicleTable tbody tr');
-
-                                            rows.forEach(row => {
-                                                row.style.display = 'none';
-                                            });
-
-                                            // Show rows matching the selected category
-                                            rows.forEach(row => {
-                                                const categoryCell = row.querySelector('td:nth-child(3)'); //this is to call the category to have === type to select category
-                                                const category = categoryCell.textContent.trim();
-
-                                                if (selectedCategory === 'All Categories' || category === selectedCategory) {
-                                                    row.style.display = ''; 
-                                                }
-                                            });
-                                        }
-                                        </script>
+                                        
                                             <!-- END DATA TABLE-->
                                     
                                             <%- include('./partials/modal/modal_vehicle.ejs'); %>

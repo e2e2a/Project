@@ -1,4 +1,31 @@
 </body>
+<script>
+    function filterVehicles() {
+        const selectedCategory = document.getElementById('categorySelect').value;
+        const selectedStatus = document.getElementById('statusSelect').value;
+        const rows = document.querySelectorAll('#vehicleTable tbody tr');
+        rows.forEach(row => {
+            row.style.display = 'none';
+        });
+
+        // Show rows matching the selected category and status
+        rows.forEach(row => {
+            const categoryCell = row.querySelector('td:nth-child(3)'); // 3rd row td to find category
+            const statusCell = row.querySelector('td:nth-child(7)'); // 7th row td to find the status
+
+            const category = categoryCell.textContent.trim();
+            const status = statusCell.textContent.trim();
+
+            const categoryMatch = selectedCategory === 'All Categories' || category === selectedCategory;
+            const statusMatch = selectedStatus === 'All Status' || status === selectedStatus;
+
+            if (categoryMatch && statusMatch) {
+                row.style.display = ''; 
+            }
+        });
+    }
+
+</script>
  <!-- Jquery JS-->
  <script src="public/vendor/jquery-3.2.1.min.js"></script>
  <!-- Bootstrap JS-->

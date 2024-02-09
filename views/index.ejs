@@ -410,19 +410,22 @@
                                                         <div class="table-data__tool">
                                                             <div class="table-data__tool-left">
                                                                 <div class="rs-select2--light rs-select2--md">
-                                                                    <select class="js-select2" name="property">
-                                                                        <option selected="selected">All Properties
+                                                                    <select id="categorySelect" class="js-select2" name="property" onchange="filterVehicles()">
+                                                                        <option  value="All Categories" >All Categories
                                                                         </option>
-                                                                        <option value="">Option 1</option>
-                                                                        <option value="">Option 2</option>
+                                                                        <option value="Motorcycle Vehicles">Motorcycle</option>
+                                                                        <option value="Military Vehicles">Military</option>
+                                                                        <option value="Heavy Equipment Vehicles">Heavy Equipment</option>
+                                                                        <option value="4-Wheel Vehicles">4-Wheel</option>
                                                                     </select>
                                                                     <div class="dropDownSelect2"></div>
                                                                 </div>
                                                                 <div class="rs-select2--light rs-select2--sm">
-                                                                    <select class="js-select2" name="time">
-                                                                        <option selected="selected">Today</option>
-                                                                        <option value="">3 Days</option>
-                                                                        <option value="">1 Week</option>
+                                                                    <select id="statusSelect" class="js-select2" name="time" onchange="filterVehicles()">
+                                                                        <option value="All Status">All Status</option>
+                                                                        <option value="available">Available</option>
+                                                                        <option value="deployed">Deployed</option>
+                                                                        <option value="process">Process</option>
                                                                     </select>
                                                                     <div class="dropDownSelect2"></div>
                                                                 </div>
@@ -449,7 +452,7 @@
 
                                                         <% if(vehicle && vehicle.length> 0) { %>
                                                             <div class="table-responsive table-responsive-data2">
-                                                                <table class="table table-data2 text-center">
+                                                                <table id="vehicleTable" class="table table-data2 text-center">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>driver</th>
