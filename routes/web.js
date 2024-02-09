@@ -13,6 +13,7 @@ module.exports = function(app){
     app.post('/create/vehicle', vehicleController.doCreate)
     app.get('/vehicles',creatorController.index);
     app.post('/vehicles/approval',creatorController.approve);
+    app.post('/vehicles/remove', creatorController.remove);
     //Utilities
     app.get('/alert', (req,res) => {
         res.render('alert')

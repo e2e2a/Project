@@ -77,3 +77,37 @@ module.exports.approve = async (req, res) => {
         console.log('Default logic goes here');
     }
 }
+module.exports.remove = async(req,res) => {
+    const formId = req.body.formId;
+        try {
+            const requestForm = await requestedForm.findById(formId);
+
+            // Check if all selected vehicles have non-zero quantities
+            const allQuantitiesNonZero = await Promise.all(requestForm.selectedVehicle.map(async (selectedVehicle) => {
+                const vehicleCount = await Vehicle.countDocuments({ type: selectedVehicle.vehicleId, qty: 0 , status: 'process' });
+                return vehicleCount >= selectedVehicle.qty; // Check if enough vehicles of this type are available
+            }));
+
+            // Check if all selected vehicles have non-zero quantities
+            if (allQuantitiesNonZero.every(quantity => quantity)) {
+                await Promise.all(requestForm.selectedVehicle.map(async (selectedVehicle) => {
+                    const vehiclesToUpdate = await Vehicle.find({ type: selectedVehicle.vehicleId, qty:0 , status: 'process' }).limit(selectedVehicle.qty);
+                    await Promise.all(vehiclesToUpdate.map(async (vehicle) => {
+                        vehicle.qty = 1; // Deduct the quantity of each vehicle
+                        vehicle.status = 'available'; 
+                        await vehicle.save();
+                    }));
+                }));
+
+                await requestedForm.findByIdAndUpdate(formId, { status: 'pending' });
+                // Handle successful update
+                req.flash('message', 'Request Cancelled Successfully!');
+                return res.status(200).redirect('/vehicles');
+            } else {
+                req.flash('message', 's');
+                return res.status(400).redirect('/vehicles');
+            }
+        } catch (error) {
+            console.error('Error approving request:', error);
+        }
+}
