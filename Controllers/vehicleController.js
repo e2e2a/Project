@@ -20,11 +20,11 @@ module.exports.doCreate = (req, res) => {
                 data.save().then(() => {
                     console.log('success', data)
                     req.flash('success', 'Creation Success!')
-                    return res.redirect('/');
+                    return res.redirect('/vehicles');
                 }, () => {
                     console.log('failed', data)
                     req.flash('failed', 'Creation failed!')
-                    return res.redirect('/');
+                    return res.redirect('/vehicles');
                 });
         } else if (category === 'Heavy Equipment Vehicles') {
             const type = req.body.typeHeavy;
@@ -42,11 +42,11 @@ module.exports.doCreate = (req, res) => {
                 data.save().then(() => {
                     console.log('success', data)
                     req.flash('success', 'Creation Success!')
-                    return res.redirect('/');
+                    return res.redirect('/vehicles');
                 }, () => {
                     console.log('failed', data)
                     req.flash('failed', 'Creation failed!')
-                    return res.redirect('/');
+                    return res.redirect('/vehicles');
                 });
         } else if(category === 'Military Vehicles') {
             const type = req.body.typeMilitary;
@@ -64,11 +64,11 @@ module.exports.doCreate = (req, res) => {
             data.save().then(() => {
                 console.log('success', data)
                 req.flash('success', 'Creation Success!')
-                return res.redirect('/');
+                return res.redirect('/vehicles');
             }, () => {
                 console.log('failed', data)
                 req.flash('failed', 'Creation failed!')
-                return res.redirect('/');
+                return res.redirect('/vehicles');
             });
         } else if(category === '4-Wheel Vehicles') {
             const type = req.body.typeWheel;
@@ -86,11 +86,11 @@ module.exports.doCreate = (req, res) => {
             data.save().then(() => {
                 console.log('success', data)
                 req.flash('success', 'Creation Success!')
-                return res.redirect('/');
+                return res.redirect('/vehicles');
             }, () => {
                 console.log('failed', data)
                 req.flash('failed', 'Creation failed!')
-                return res.redirect('/');
+                return res.redirect('/vehicles');
             });
         }
     } catch (error) {
