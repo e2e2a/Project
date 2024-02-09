@@ -6,13 +6,15 @@ var path = require('path');
 const dbConnect = require('./database/dbConnect');
 const flash = require('express-flash');
 const User = require('./models/user')
-const  startServer  = require('./database/UserCreated');
+const startServer = require('./database/UserCreated');
 
 const app = express();
 const conn = dbConnect();
 
-app.use(session({ secret: 'sessionsecret777' ,resave: false,
-saveUninitialized: true,}));
+app.use(session({
+    secret: 'sessionsecret777', resave: false,
+    saveUninitialized: true,
+}));
 app.use(bodyparser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -24,13 +26,13 @@ app.use(function (req, res, next) {
     req.db = conn;
     next();
 });
-app.use((req, res, next) => {
-    res.status(404).render('404');
-  });
 
 
 require('./routes/web')(app);
 const PORT = process.env.PORT
+app.use((req, res, next) => {
+    res.status(404).render('404');
+});
 app.listen(PORT, async () => {
     console.log("Server is running at port", PORT);
     await startServer(); // Call startServer here
