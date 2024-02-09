@@ -370,16 +370,21 @@
                                                         </thead>
                                                         <tbody>
                                                             <!-- request && modal Loop start -->
-                                                            <% if(reqForms && reqForms.length> 0) { %>
-                                                                <% reqForms.forEach(reqForm=> { %>
-                                                                    <% if(reqForm.status === 'pending'){ %>
-                                                                    <%- include('partials/request_form/creator_single_form.ejs', {reqForm: reqForm}); %>
+                                                            <% if (reqForms && reqForms.length > 0) { %>
+                                                                <% let pendingRequestsExist = false; %>
+                                                                <% reqForms.forEach(reqForm => { %>
+                                                                    <% if (reqForm.status === 'pending') { %>
+                                                                        <%- include('partials/request_form/creator_single_form.ejs', { reqForm: reqForm }); %>
+                                                                        <% pendingRequestsExist = true; %>
                                                                     <% } %>
                                                                 <% }); %>
+                                                                <% if (!pendingRequestsExist) { %>
+                                                                    <p>No Available Request</p>
+                                                                <% } %>
                                                             <% } else { %>
-                                                                <p>No request Found.</p>
+                                                                <p>No Requests Found.</p>
                                                             <% } %>
-                                                                                    <!-- request && modal Loop end -->
+                                                            <!-- request && modal Loop end -->
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -488,9 +493,6 @@
         window.alert('<%= messages.message %>');
         <% } %>
 
-        <% if (messages.success) { %>
-        window.alert('<%= messages.success %>');
-        <% } %>
     </script>
     <%- include('partials/footer/footer.ejs'); %>
         <% } %>

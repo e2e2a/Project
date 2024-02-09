@@ -4602,7 +4602,13 @@ section {
     -ms-flex-pack: end;
     justify-content: flex-end;
 }
+.table-data-feature .delete:hover{
+    background-color: #f8baba;
+}
 
+.table-data-feature .approve:hover{
+    background-color: #A0F9A0;
+}
 .table-data-feature .item {
     display: block;
     height: 30px;

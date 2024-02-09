@@ -30,12 +30,12 @@
     <td>
         <form action="vehicles/approval" method="post" class="table-data-feature text-center">
             <input type="hidden" name="formId" value="<%= reqForm._id %>">
-            <button class="item" data-toggle="tooltip" name="actions" value="approve"
-                data-placement="top" title="Approve" style="background-color:#A0F9A0;">
+            <button class="item approve" data-toggle="tooltip" name="actions" value="approve"
+                data-placement="top" title="Approve" >
                 <i class="zmdi zmdi-check-square" ></i>
             </button>
-            <button class="item" data-toggle="tooltip" name="actions" value="decline"
-                data-placement="top" title="Decline" style="background-color:#f8baba;">
+            <button class="item delete" data-toggle="tooltip" name="actions" value="decline"
+                data-placement="top" title="Decline">
                 <i class="zmdi zmdi-close"></i>
             </button>
         </form>

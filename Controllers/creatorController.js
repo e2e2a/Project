@@ -59,7 +59,7 @@ module.exports.approve = async (req, res) => {
                 await requestedForm.findByIdAndUpdate(formId, { status: 'process' });
 
                 // Handle successful update
-                req.flash('success', 'Approved');
+                req.flash('message', 'Approved');
                 return res.status(200).redirect('/vehicles');
             } else {
                 // Handle the case where some selected vehicles have insufficient quantity
