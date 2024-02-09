@@ -6,7 +6,7 @@ const Vehicle = require('../models/vehicle');
 module.exports.index = async (req, res) => {
     const login = req.session.login;
     const userLogin = await User.findById(login);
-    if (userLogin) {
+    if (userLogin && userLogin.role === 'creator') {
         const UserIdlogin = req.session.login;
         const users = await User.find();
         const user = await User.findById(UserIdlogin);
