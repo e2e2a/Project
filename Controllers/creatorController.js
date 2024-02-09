@@ -4,7 +4,9 @@ const requestedForm = require('../models/request');
 const Vehicle = require('../models/vehicle');
 
 module.exports.index = async (req, res) => {
-    if (req.session.login) {
+    const login = req.session.login;
+    const userLogin = await findById(login);
+    if (userLogin) {
         const UserIdlogin = req.session.login;
         const users = await User.find();
         const user = await User.findById(UserIdlogin);
@@ -26,7 +28,7 @@ module.exports.index = async (req, res) => {
 
         })
     } else {
-        res.redirect('/login')
+        return res.redirect('404')
     }
 }
 module.exports.approve = async (req, res) => {
