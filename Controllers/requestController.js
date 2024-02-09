@@ -127,8 +127,6 @@ module.exports.index = async (req, res) => {
                     throw new Error('Failed to send email');
                 }
             };
-
-            // Constructing the verification link and email content
             const Link = `https://lguk-online.onrender.com/dashboard`;
             const emailContent = `
             <div style="font-family: Arial, sans-serif; padding: 20px;">
