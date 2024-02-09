@@ -24,6 +24,9 @@ app.use(function (req, res, next) {
     req.db = conn;
     next();
 });
+app.use((req, res, next) => {
+    res.status(404).render('404');
+  });
 
 
 require('./routes/web')(app);
