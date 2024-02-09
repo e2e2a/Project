@@ -14,7 +14,6 @@ module.exports.index = async (req, res) => {
         const reqForms = await requestedForm.find();
         const vehicle = await Vehicle.find();
         const vehicles = await Vehicle.find();
-
         res.render('creator', {
             site_tile: SITE_TITLE,
             title: 'dashboard',
