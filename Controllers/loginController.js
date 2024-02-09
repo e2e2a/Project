@@ -12,57 +12,62 @@ module.exports.index = (req,res) => {
 module.exports.submit = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.body.email });
-        if(user.role === 'admin'){
-            if (!user) {
-                req.flash('error', 'Invalid Email.');
-                return res.status(400).redirect('/login');
-            }
-    
-            user.comparePassword(req.body.password, (error, valid) => {
-                if (error) {
-                    return res.status(403).send('Forbidden');
-                }
-                if (!valid) {
-                    req.flash('error', 'Password does not match.');
+        if(user){
+            if(user.role === 'admin'){
+                if (!user) {
+                    req.flash('error', 'Invalid Email.');
                     return res.status(400).redirect('/login');
                 }
-                req.session.login = user.id;
-                res.redirect('/dashboard');
-            });
-        }else if (user.role === 'creator'){
-            if (!user) {
-                req.flash('error', 'Invalid Email.');
-                return res.status(400).redirect('/login');
-            }
-    
-            user.comparePassword(req.body.password, (error, valid) => {
-                if (error) {
-                    return res.status(403).send('Forbidden');
-                }
-                if (!valid) {
-                    req.flash('error', 'Password does not match.');
+        
+                user.comparePassword(req.body.password, (error, valid) => {
+                    if (error) {
+                        return res.status(403).send('Forbidden');
+                    }
+                    if (!valid) {
+                        req.flash('error', 'Password does not match.');
+                        return res.status(400).redirect('/login');
+                    }
+                    req.session.login = user.id;
+                    res.redirect('/dashboard');
+                });
+            }else if (user.role === 'creator'){
+                if (!user) {
+                    req.flash('error', 'Invalid Email.');
                     return res.status(400).redirect('/login');
                 }
-                req.session.login = user.id;
-                res.redirect('/vehicles');
-            });
-        } else if(user.role === 'member'){
-            if (!user) {
-                req.flash('error', 'Invalid Email.');
-                return res.status(400).redirect('/login');
-            }
-    
-            user.comparePassword(req.body.password, (error, valid) => {
-                if (error) {
-                    return res.status(403).send('Forbidden');
-                }
-                if (!valid) {
-                    req.flash('error', 'Password does not match.');
+        
+                user.comparePassword(req.body.password, (error, valid) => {
+                    if (error) {
+                        return res.status(403).send('Forbidden');
+                    }
+                    if (!valid) {
+                        req.flash('error', 'Password does not match.');
+                        return res.status(400).redirect('/login');
+                    }
+                    req.session.login = user.id;
+                    res.redirect('/vehicles');
+                });
+            } else if(user.role === 'member'){
+                if (!user) {
+                    req.flash('error', 'Invalid Email.');
                     return res.status(400).redirect('/login');
                 }
-                req.session.login = user.id;
-                res.redirect('/');
-            });
+        
+                user.comparePassword(req.body.password, (error, valid) => {
+                    if (error) {
+                        return res.status(403).send('Forbidden');
+                    }
+                    if (!valid) {
+                        req.flash('error', 'Password does not match.');
+                        return res.redirect('/login');
+                    }
+                    req.session.login = user.id;
+                    res.redirect('/');
+                });
+            }
+        } else{
+            req.flash('error', 'Forbidden: Please Contact Us For More Info!');
+            return res.redirect('/login');
         }
         
     } catch (error) {

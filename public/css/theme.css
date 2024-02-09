@@ -4643,8 +4643,14 @@ section {
     line-height: 30px;
     padding: 0 14px;
 }
-.status--pending {
+.status--process {
     color: #00b5e9;
+}
+.status--pending {
+    color: #808080;
+}
+.status--approved {
+    color: #00ad5f;
 }
 .status--available {
     color: #00ad5f;

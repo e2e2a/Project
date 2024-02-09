@@ -33,32 +33,42 @@ module.exports.approve = async (req, res) => {
     const actions = req.body.actions;
     if (actions === 'approve') {
         const formId = req.body.formId;
-        // const vechile = await Vehicle.findByIdAndUpdate({ status: 'deployed' });
         try {
-            // Find the requested form by its ID
-            const requestForm = await requestedForm.findByIdAndUpdate(formId, { status: 'Approved' });
+            const requestForm = await requestedForm.findById(formId);
 
-            // Check if all selected vehicles have a quantity greater than 0
-            const allQuantitiesNonZero = await Promise.all(requestForm.selectedVehicle.map(async (vehicleId) => {
-                const vehicle = await Vehicle.findById(vehicleId);
-                return vehicle.qty !== 0;
+            // Check if all selected vehicles have non-zero quantities
+            const allQuantitiesNonZero = await Promise.all(requestForm.selectedVehicle.map(async (selectedVehicle) => {
+                const vehicleCount = await Vehicle.countDocuments({ type: selectedVehicle.vehicleId, qty: { $gt: 0 }, status: 'available' });
+                return vehicleCount >= selectedVehicle.qty; // Check if enough vehicles of this type are available
             }));
-            
+
+            // Check if all selected vehicles have non-zero quantities
             if (allQuantitiesNonZero.every(quantity => quantity)) {
-                const selectedVehicles = await Vehicle.find({ _id: { $in: requestForm.selectedVehicle } });
-                await Promise.all(selectedVehicles.map(async (vehicle) => {
-                    vehicle.status = 'deployed';
-                    vehicle.qty = 0;
-                    await vehicle.save();
+                // Deduct quantities for all selected vehicles
+                await Promise.all(requestForm.selectedVehicle.map(async (selectedVehicle) => {
+                    // Find and update the required number of vehicles of this type
+                    const vehiclesToUpdate = await Vehicle.find({ type: selectedVehicle.vehicleId, qty: { $gt: 0 }, status: 'available' }).limit(selectedVehicle.qty);
+                    await Promise.all(vehiclesToUpdate.map(async (vehicle) => {
+                        vehicle.qty = 0; // Deduct the quantity of each vehicle
+                        vehicle.status = 'process'; // Update status to pending
+                        await vehicle.save();
+                    }));
                 }));
+
+                // Update the status of the form to 'Process'
+                await requestedForm.findByIdAndUpdate(formId, { status: 'process' });
+
+                // Handle successful update
                 req.flash('success', 'Approved');
+                return res.status(200).redirect('/vehicles');
             } else {
-                req.flash('message', 'Cannot Approved Some selected vehicles deployed.');
-                res.redirect('/vehicles');
+                // Handle the case where some selected vehicles have insufficient quantity
+                req.flash('message', 'Cannot approve form. Some selected vehicles have insufficient quantity.');
+                return res.status(400).redirect('/vehicles');
             }
+
         } catch (error) {
             console.error('Error approving request:', error);
-            res.status(500).json({ message: 'Internal Server Error' });
         }
     } else if (actions === 'decline') {
 

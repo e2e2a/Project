@@ -338,25 +338,17 @@
                                                     <div class="table-data__tool">
                                                         <div class="table-data__tool-left">
                                                             <div class="rs-select2--light rs-select2--md">
-                                                                <select class="js-select2" name="property">
-                                                                    <option selected="selected">All Properties
+                                                                <select id="categorySelect" class="js-select2" name="property" onchange="filterVehicles()">
+                                                                    <option  value="All Categories" >All Categories
                                                                     </option>
-                                                                    <option value="">Option 1</option>
-                                                                    <option value="">Option 2</option>
+                                                                    <option value="Motorcycle Vehicles">Motorcycle Vehicles</option>
+                                                                    <option value="Military Vehicles">Military Vehicles</option>
+                                                                    <option value="Heavy Equipment Vehicles">Heavy Equipment Vehicles</option>
+                                                                    <option value="4-Wheel Vehicles">4-Wheel Vehicles</option>
                                                                 </select>
                                                                 <div class="dropDownSelect2"></div>
                                                             </div>
-                                                            <div class="rs-select2--light rs-select2--sm">
-                                                                <select class="js-select2" name="time">
-                                                                    <option selected="selected">Today</option>
-                                                                    <option value="">3 Days</option>
-                                                                    <option value="">1 Week</option>
-                                                                </select>
-                                                                <div class="dropDownSelect2"></div>
-                                                            </div>
-                                                            <button class="au-btn-filter">
-                                                                <i
-                                                                    class="zmdi zmdi-filter-list"></i>filters</button>
+                                                            <button class="au-btn-filter">  <i class="zmdi zmdi-filter-list"></i>filters</button>
                                                         </div>
                                                         <div class="table-data__tool-right">
                                                             <button
@@ -368,7 +360,7 @@
 
                                                     <% if(vehicles && vehicles.length > 0) { %>
                                                         <div class="table-responsive table-responsive-data2">
-                                                            <table class="table table-data2 text-center">
+                                                            <table id="vehicleTable" class="table table-data2 text-center">
                                                                 <thead>
                                                                     <tr>
                                                                         <th>driver</th>
@@ -396,7 +388,27 @@
                                     <% } else { %>
                                         <p class="text-center">No Vehicles Available.</p>
                                         <% } %>
+                                        <script>
+                                             function filterVehicles() {
+                                            const selectedCategory = document.getElementById('categorySelect').value;
 
+                                            const rows = document.querySelectorAll('#vehicleTable tbody tr');
+
+                                            rows.forEach(row => {
+                                                row.style.display = 'none';
+                                            });
+
+                                            // Show rows matching the selected category
+                                            rows.forEach(row => {
+                                                const categoryCell = row.querySelector('td:nth-child(3)'); //this is to call the category to have === type to select category
+                                                const category = categoryCell.textContent.trim();
+
+                                                if (selectedCategory === 'All Categories' || category === selectedCategory) {
+                                                    row.style.display = ''; 
+                                                }
+                                            });
+                                        }
+                                        </script>
                                             <!-- END DATA TABLE-->
                                     
                                             <%- include('./partials/modal/modal_vehicle.ejs'); %>
