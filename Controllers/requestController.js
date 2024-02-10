@@ -12,10 +12,15 @@ module.exports.index = async (req, res) => {
         if (!req.session.login) {
             return res.redirect('/login');
         }
-        const selectedVehicleIds = Array.isArray(req.body.selectedVehicle) ? req.body.selectedVehicle : [req.body.selectedVehicle];
+        const selectedVehicleIds = Array.isArray(req.body.selectedVehicle) ? req.body.selectedVehicle : [];
+        if (!selectedVehicleIds || selectedVehicleIds.length === 0) {
+            console.log('Selected Vehicle IDs:', selectedVehicleIds);
+            return res.status(404).render('404');
+        }
+        
         const AllSelectedVehicles = selectedVehicleIds.map(vehicleId => ({
             vehicleId: vehicleId,
-            qty: req.body.qty[vehicleId] // Assuming qty is sent as an object with vehicle IDs as keys
+            qty: req.body.qty[vehicleId]
         }));
         console.log('Selected Vehicle IDs:', AllSelectedVehicles);
         const user = await User.findById(req.session.login);
@@ -132,7 +137,7 @@ module.exports.index = async (req, res) => {
             <div style="font-family: Arial, sans-serif; padding: 20px;">
                 <p style="color: #000; font-size="18px">Requested By: <strong>${user.fullname}</strong> (${user.assign})</p>
                 <p style="color: #000;">Requestor Name: <strong>${savedRequest.requestorName}</strong></p>
-                <p>Go to <a href="${Link}" >Dashboard</a>
+                <p>Go to <a href="${Link}" >Dashboard</a> </p>
             </div>
         `;
 

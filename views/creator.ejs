@@ -265,6 +265,7 @@
                         
                                 
                                     <!-- Request List-->
+                                <% if (reqForms && reqForms.length > 0 && reqForms.some(reqForm => reqForm.status === 'process')) { %>
                                 <section class="p-t-20">
                                     <div class="container">
                                         <div class="row">
@@ -325,6 +326,8 @@
                                         </div>
                                     </div>
                                 </section>
+                                <% } %>
+                                    
                                 <!-- END DATA request list TABLE-->
                                 
                                 <!-- Request List-->

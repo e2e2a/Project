@@ -25,12 +25,18 @@ app.use(function (req, res, next) {
     next();
 });
 
-
 require('./routes/web')(app);
-const PORT = process.env.PORT
+app.use((req, res, next) => {
+    if (!req.session.login) {
+        return res.redirect('/login');
+    }
+    next();
+});
+
 app.use((req, res, next) => {
     res.status(404).render('404');
 });
+const PORT = process.env.PORT
 app.listen(PORT, async () => {
     console.log("Server is running at port", PORT);
     await startServer(); // Call startServer here
