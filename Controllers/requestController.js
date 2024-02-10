@@ -12,17 +12,24 @@ module.exports.index = async (req, res) => {
         if (!req.session.login) {
             return res.redirect('/login');
         }
-        const selectedVehicleIds = Array.isArray(req.body.selectedVehicle) ? req.body.selectedVehicle : [];
-        if (!selectedVehicleIds || selectedVehicleIds.length === 0) {
-            console.log('Selected Vehicle IDs:', selectedVehicleIds);
-            return res.status(404).render('404');
-        }
-        
+        let selectedVehicleIds;
+if (Array.isArray(req.body.selectedVehicle)) {
+    selectedVehicleIds = req.body.selectedVehicle;
+} else {
+    // If req.body.selectedVehicle is not an array, convert it to an array with a single element
+    selectedVehicleIds = [req.body.selectedVehicle];
+}
+
         const AllSelectedVehicles = selectedVehicleIds.map(vehicleId => ({
             vehicleId: vehicleId,
             qty: req.body.qty[vehicleId]
         }));
         console.log('Selected Vehicle IDs:', AllSelectedVehicles);
+        const noVehicleSelected = AllSelectedVehicles.some(vehicle => vehicle.vehicleId === undefined || vehicle.qty === undefined);
+        if (noVehicleSelected) {
+            console.log('No Vehicle Selected');
+            return res.status(404).render('404');
+        }
         const user = await User.findById(req.session.login);
 
         const formData = new reqForm({
@@ -36,16 +43,6 @@ module.exports.index = async (req, res) => {
         });
 
         const savedRequest = await formData.save();
-
-        //
-        // const allSelectedVehicleIds = savedRequest.selectedVehicle.map(vehicle => vehicle.vehicleId);
-        // const selectedVehicles = await Vehicle.find({ 
-        //     type: { $in: allSelectedVehicleIds }, 
-        //     _id: { $nin: allSelectedVehicleIds } // Exclude vehicles not in the selected list
-        // });
-
-        // console.log(selectedVehicles);
-        //
 
         const templatePath = path.join(__dirname, '../views/pdf/pdf-template.ejs');
         const templateContent = await fs.readFile(templatePath, 'utf-8');
@@ -135,7 +132,7 @@ module.exports.index = async (req, res) => {
             const Link = `https://lguk-online.onrender.com/dashboard`;
             const emailContent = `
             <div style="font-family: Arial, sans-serif; padding: 20px;">
-                <p style="color: #000; font-size="18px">Requested By: <strong>${user.fullname}</strong> (${user.assign})</p>
+                <p style="color: #000; font-size:18px;">Requested By: <strong>${user.fullname}</strong> (${user.assign})</p>
                 <p style="color: #000;">Requestor Name: <strong>${savedRequest.requestorName}</strong></p>
                 <p>Go to <a href="${Link}" >Dashboard</a> </p>
             </div>
@@ -149,7 +146,7 @@ module.exports.index = async (req, res) => {
                 outputPath
             );
             //end
-            return res.redirect('/');
+            return res.status(200).redirect('/');
         } catch (error) {
             console.error('Error launching browser:', error);
         }

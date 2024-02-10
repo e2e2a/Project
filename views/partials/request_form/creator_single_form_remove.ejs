@@ -17,6 +17,7 @@
 </div>
 <!-- end modal scroll -->
     <td><%= user.fullname %></td>
+    <td><%= user.assign %></td>
     <td>
         <span class="block-email"><%= user.email %></span>
     </td>
@@ -27,6 +28,7 @@
     </td>
     
     <td><%= reqForm.requestorName %></td>
+    <% if(reqForm.status === 'process') {%>
     <td>
         <form action="vehicles/remove" method="post" class="table-data-feature text-center">
             <input type="hidden" name="formId" value="<%= reqForm._id %>">
@@ -36,5 +38,6 @@
             </button>
         </form>
     </td>
+    <% } %>
 </tr>
 <tr class="spacer"></tr>

@@ -22,38 +22,24 @@
         <span class="block-email"><%= user.email %></span>
     </td>
     <td>date</td>
-    <% if(reqForm.status === 'approved') { %>
     <td><button type="button" data-toggle="modal" data-target="#<%= reqForm._id %>">View PDF</button></td>
-    <% } %>
     <td>
         <span class="status--<%= reqForm.status %>"><%= reqForm.status %></span>
     </td>
     
     <td><%= reqForm.requestorName %></td>
-    <% if(reqForm.status === 'pending') {%>
-    <td> 
-        <div class="table-data-feature">
-            <button class="item" data-toggle="tooltip"
-                data-placement="top" title="Send">
-                <i class="zmdi zmdi-mail-send"></i>
+    <td>
+        <form action="admin/approve" method="post" class="table-data-feature text-center">
+            <input type="hidden" name="formId" value="<%= reqForm._id %>">
+            <button class="item approve" data-toggle="tooltip" name="actions" value="approve"
+                data-placement="top" title="Approve" >
+                <i class="zmdi zmdi-check-square" ></i>
             </button>
-            <button class="item" data-toggle="tooltip"
-                data-placement="top" title="Edit">
-                <i class="zmdi zmdi-edit"></i>
+            <button class="item delete" data-toggle="tooltip" name="actions" value="decline"
+                data-placement="top" title="Decline">
+                <i class="zmdi zmdi-close"></i>
             </button>
-            <button class="item" data-toggle="tooltip"
-                data-placement="top" title="Delete">
-                <i class="zmdi zmdi-delete"></i>
-            </button>
-            <button class="item" data-toggle="tooltip"
-                data-placement="top" title="More">
-                <i class="zmdi zmdi-more"></i>
-            </button>
-        </div>
+        </form>
     </td>
-        <% } else if(reqForm.status === 'process'){ %>
-            <td><p class="text-right">Waiting for Approval</p></td>
-        <% } %>
-    
 </tr>
 <tr class="spacer"></tr>

@@ -2,7 +2,8 @@ const indexController = require('../Controllers/indexController');
 const requestController = require('../Controllers/requestController');
 const loginController = require('../Controllers/loginController');
 const vehicleController = require('../Controllers/vehicleController');
-const creatorController = require('../Controllers/creatorController')
+const creatorController = require('../Controllers/creatorController');
+const adminController = require('../Controllers/adminController');
 module.exports = function(app){
 
     app.get('/', indexController.index);
@@ -16,6 +17,9 @@ module.exports = function(app){
     app.post('/vehicles/approval',creatorController.approve);
     app.post('/vehicles/remove', creatorController.remove);
     app.get('/inventory', creatorController.inventory);
+    //admin
+    app.get('/admin', adminController.index);
+    app.post('/admin/approve', adminController.approve);
     //Utilities
     app.get('/alert', (req,res) => {
         res.render('alert')

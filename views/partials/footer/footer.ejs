@@ -1,5 +1,8 @@
 </body>
 <script>
+    <% if (messages.message) { %>
+        window.alert('<%= messages.message %>');
+    <% } %>
     function filterVehicles() {
         const selectedCategory = document.getElementById('categorySelect').value;
         const selectedStatus = document.getElementById('statusSelect').value;

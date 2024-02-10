@@ -28,7 +28,7 @@ module.exports.submit = async (req, res) => {
                         return res.status(400).redirect('/login');
                     }
                     req.session.login = user.id;
-                    res.redirect('/dashboard');
+                    res.redirect('/admin');
                 });
             }else if (user.role === 'creator'){
                 if (!user) {
