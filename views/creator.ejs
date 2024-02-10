@@ -263,79 +263,143 @@
                         </section>
                         <!-- END STATISTIC CHART-->
                         
-                                
-                                    <!-- Request List-->
-                                <% if (reqForms && reqForms.length > 0 && reqForms.some(reqForm => reqForm.status === 'process')) { %>
-                                <section class="p-t-20">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h3 class="title-5 m-b-35">Request Process</h3>
-                                                <div class="table-data__tool">
-                                                    <div class="table-data__tool-left">
-                                                        <div class="rs-select2--light rs-select2--md">
-                                                            <select class="js-select2" name="property">
-                                                                <option selected="selected">All Properties</option>
-                                                                <option value="">Option 1</option>
-                                                                <option value="">Option 2</option>
-                                                            </select>
-                                                            <div class="dropDownSelect2"></div>
-                                                        </div>
-                                                        <div class="rs-select2--light rs-select2--sm">
-                                                            <select class="js-select2" name="time">
-                                                                <option selected="selected">Today</option>
-                                                                <option value="">3 Days</option>
-                                                                <option value="">1 Week</option>
-                                                            </select>
-                                                            <div class="dropDownSelect2"></div>
-                                                        </div>
-                                                        <button class="au-btn-filter">
-                                                            <i class="zmdi zmdi-filter-list"></i>filters</button>
-                                                    </div>
+                        <!-- Request Approved Start-->
+                        <% if(reqForms && reqForms.some(reqForm => ['approved', 'declined'].includes(reqForm.status))) { %>
+                        <section class="p-t-20">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="title-5 m-b-35">Request Process</h3>
+                                        <div class="table-data__tool">
+                                            <div class="table-data__tool-left">
+                                                <div class="rs-select2--light rs-select2--md">
+                                                    <select class="js-select2" name="property">
+                                                        <option selected="selected">All Properties</option>
+                                                        <option value="">Option 1</option>
+                                                        <option value="">Option 2</option>
+                                                    </select>
+                                                    <div class="dropDownSelect2"></div>
                                                 </div>
-                                                <div class="table-responsive table-responsive-data2">
-                                                    <table class="table table-data2 text-center">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Requestor</th>
-                                                                <th>email</th>
-                                                                <th>date</th>
-                                                                <th>form</th>
-                                                                <th>status</th>
-                                                                <th>requested by</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <!-- request && modal Loop start -->
-                                                            <% if(reqForms && reqForms.length> 0) { %>
-                                                                <% reqForms.forEach(reqForm=> { %>
-                                                                    <% if(reqForm.status === 'process') { %>
-                                                                    <%- include('partials/request_form/creator_single_form_remove.ejs',
-                                                                        {reqForm: reqForm}); %>
-                                                                    <% }%>
-                                                                <% }); %>
-                                                            <% } else { %>
-                                                                <p>No request Found.</p>
-                                                            <% } %>
-                                                            <!-- request && modal Loop end -->
-                                                        </tbody>
-                                                    </table>
+                                                <div class="rs-select2--light rs-select2--sm">
+                                                    <select class="js-select2" name="time">
+                                                        <option selected="selected">Today</option>
+                                                        <option value="">3 Days</option>
+                                                        <option value="">1 Week</option>
+                                                    </select>
+                                                    <div class="dropDownSelect2"></div>
                                                 </div>
+                                                <button class="au-btn-filter">
+                                                    <i class="zmdi zmdi-filter-list"></i>filters</button>
                                             </div>
                                         </div>
+                                        <div class="table-responsive table-responsive-data2">
+                                            <table class="table table-data2 text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Requestor</th>
+                                                        <th>email</th>
+                                                        <th>date</th>
+                                                        <th>form</th>
+                                                        <th>status</th>
+                                                        <th>requested by</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- request && modal Loop start -->
+                                                    <% if(reqForms && reqForms.length> 0) { %>
+                                                        <% reqForms.forEach(reqForm=> { %>
+                                                            <% if(reqForm.status === 'process') { %>
+                                                            <%- include('partials/request_form/creator_single_form_remove.ejs',
+                                                                {reqForm: reqForm}); %>
+                                                            <% }%>
+                                                        <% }); %>
+                                                    <% } else { %>
+                                                        <p>No request Found.</p>
+                                                    <% } %>
+                                                    <!-- request && modal Loop end -->
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </section>
-                                <% } %>
-                                    
-                                <!-- END DATA request list TABLE-->
+                                </div>
+                            </div>
+                        </section>
+                        <% } %>
+                        <!-- Request Approved End-->        
+                        <!-- Request Process Start-->
+                        <% if (reqForms && reqForms.length > 0 && reqForms.some(reqForm => reqForm.status === 'process')) { %>
+                        <section class="p-t-20">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="title-5 m-b-35">Request Process</h3>
+                                        <div class="table-data__tool">
+                                            <div class="table-data__tool-left">
+                                                <div class="rs-select2--light rs-select2--md">
+                                                    <select class="js-select2" name="property">
+                                                        <option selected="selected">All Properties</option>
+                                                        <option value="">Option 1</option>
+                                                        <option value="">Option 2</option>
+                                                    </select>
+                                                    <div class="dropDownSelect2"></div>
+                                                </div>
+                                                <div class="rs-select2--light rs-select2--sm">
+                                                    <select class="js-select2" name="time">
+                                                        <option selected="selected">Today</option>
+                                                        <option value="">3 Days</option>
+                                                        <option value="">1 Week</option>
+                                                    </select>
+                                                    <div class="dropDownSelect2"></div>
+                                                </div>
+                                                <button class="au-btn-filter">
+                                                    <i class="zmdi zmdi-filter-list"></i>filters</button>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive table-responsive-data2">
+                                            <table class="table table-data2 text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Requestor</th>
+                                                        <th>email</th>
+                                                        <th>date</th>
+                                                        <th>form</th>
+                                                        <th>status</th>
+                                                        <th>requested by</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- request && modal Loop start -->
+                                                    <% if(reqForms && reqForms.length> 0) { %>
+                                                        <% reqForms.forEach(reqForm=> { %>
+                                                            <% if(reqForm.status === 'process') { %>
+                                                            <%- include('partials/request_form/creator_single_form_remove.ejs',
+                                                                {reqForm: reqForm}); %>
+                                                            <% }%>
+                                                        <% }); %>
+                                                    <% } else { %>
+                                                        <p>No request Found.</p>
+                                                    <% } %>
+                                                    <!-- request && modal Loop end -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <% } %>
+                        <!-- Request Process End-->
+                            
+                        <!-- END request process && approve TABLE-->
                                 
                                 <!-- Request List-->
                                 <section class="p-t-20">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <h3 class="title-5 m-b-35">Request List</h3>
+                                                <h3 class="title-5 m-b-35">Requesting Form</h3>
                                                 <div class="table-data__tool">
                                                     <div class="table-data__tool-left">
                                                         <div class="rs-select2--light rs-select2--md">
@@ -358,6 +422,7 @@
                                                             <i class="zmdi zmdi-filter-list"></i>filters</button>
                                                     </div>
                                                 </div>
+                                                <% if (reqForms && reqForms.length > 0 && reqForms.some(reqForm => reqForm.status === 'pending')) { %>
                                                 <div class="table-responsive table-responsive-data2">
                                                     <table class="table table-data2 text-center">
                                                         <thead>
@@ -391,6 +456,9 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                <% } else{ %>
+                                                    <p class="text-center"> No Request Found</p>
+                                                <% } %>
                                             </div>
                                         </div>
                                     </div>
@@ -438,7 +506,6 @@
                                                                 <i class="zmdi zmdi-plus"></i>add Car</button>
                                                         </div>
                                                     </div>
-
                                                     <% if(vehicles && vehicles.length > 0) { %>
                                                         <div class="table-responsive table-responsive-data2">
                                                             <table id="vehicleTable" class="table table-data2 text-center">

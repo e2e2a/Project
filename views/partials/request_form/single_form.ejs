@@ -27,13 +27,15 @@
         <span class="block-email"><%= user.email %></span>
     </td>
     <td>date</td>
+    <% if(reqForm.status === 'approved') { %>
     <td><button type="button" data-toggle="modal" data-target="#<%= reqForm._id %>">View PDF</button></td>
+    <% } %>
     <td>
         <span class="status--<%= reqForm.status %>"><%= reqForm.status %></span>
     </td>
     
     <td><%= reqForm.requestorName %></td>
-    <td>
+    <td> <% if(reqForm.status === 'pending') {%>
         <div class="table-data-feature">
             <button class="item" data-toggle="tooltip"
                 data-placement="top" title="Send">
@@ -52,6 +54,9 @@
                 <i class="zmdi zmdi-more"></i>
             </button>
         </div>
+        <% }else { %>
+            Waiting for Approval
+        <% } %>
     </td>
 </tr>
 <tr class="spacer"></tr>

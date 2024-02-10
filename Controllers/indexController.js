@@ -37,3 +37,35 @@ module.exports.index = async (req,res) => {
         console.log('err:', err)
     }
 }
+module.exports.requests = async(req,res) => {
+    const login = req.session.login;
+    const userLogin = await User.findById(login);
+    try {
+        if(userLogin){
+            if(userLogin.role === 'member'){
+            const UserIdlogin = req.session.login;
+            const users = await User.find();
+            const user = await User.findById(UserIdlogin);
+            const reqForms = await requestedForm.find({userId: user._id});
+            const reqForm = await requestedForm.find();
+            
+            res.render('request_status', {
+                site_tile: SITE_TITLE,
+                title: 'dashboard',
+                users: users,
+                user: user,
+                reqForm: reqForm,
+                reqForms: reqForms,
+                messages: req.flash(),
+                
+            })
+            }else{
+                return res.render('404')
+            }
+        }else{
+            return res.redirect('/login')
+        }
+    }catch(err){
+        console.log('err:', err)
+    }
+}

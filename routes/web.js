@@ -6,6 +6,7 @@ const creatorController = require('../Controllers/creatorController')
 module.exports = function(app){
 
     app.get('/', indexController.index);
+    app.get('/requests', indexController.requests);
     app.post('/submit', requestController.index);
     app.get('/login', loginController.index);
     app.post('/login', loginController.submit);
@@ -14,6 +15,7 @@ module.exports = function(app){
     app.get('/vehicles',creatorController.index);
     app.post('/vehicles/approval',creatorController.approve);
     app.post('/vehicles/remove', creatorController.remove);
+    app.get('/inventory', creatorController.inventory);
     //Utilities
     app.get('/alert', (req,res) => {
         res.render('alert')

@@ -110,3 +110,26 @@ module.exports.remove = async (req, res) => {
         console.error('Error approving request:', error);
     }
 }
+
+module.exports.inventory = async (req, res) => {
+    const UserIdlogin = req.session.login;
+    const user = await User.findById(UserIdlogin);
+    if (user) {
+        if (user.role === 'creator') {
+            const reqForms = await requestedForm.find();
+            const vehicles = await Vehicle.find();
+            res.render('creator_vehicles', {
+                site_tile: SITE_TITLE,
+                title: 'dashboard',
+                user: user,
+                reqForms: reqForms,
+                messages: req.flash(),
+                vehicles: vehicles,
+            });
+        } else {
+            return res.status(404).render('/404')
+        }
+    } else {
+        return res.redirect('/404')
+    }
+}
