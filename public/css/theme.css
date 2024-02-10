@@ -4661,6 +4661,9 @@ section {
 .status--available {
     color: #00ad5f;
 }
+.status--declined {
+    color: #fa4251;
+}
 
 .status--deployed {
     color: #fa4251;
