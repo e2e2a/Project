@@ -1,4 +1,4 @@
-const SITE_TITLE = 'Online LGU Katipunan Appointment System'
+const SITE_TITLE = 'Online LGU Katipunan Appointment System';
 const User = require('../models/user');
 
 module.exports.index = (req,res) => {

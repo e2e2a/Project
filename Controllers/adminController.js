@@ -19,8 +19,8 @@ module.exports.index = async (req, res) => {
                 const vehicle = await Vehicle.find();
                 const vehicles = await Vehicle.find();
                 res.render('admin', {
-                    site_tile: SITE_TITLE,
-                    title: 'dashboard',
+                    site_title: SITE_TITLE,
+                    title: 'Admin',
                     users: users,
                     user: user,
                     reqForms: reqForms,
@@ -169,5 +169,37 @@ module.exports.approve = async (req, res) => {
     }
     } else {
         console.log('Default logic goes here');
+    }
+}
+module.exports.dashboard = async (req, res) => {
+    const login = req.session.login;
+    const userLogin = await User.findById(login);
+    try {
+        if (userLogin) {
+            if (userLogin.role === 'admin') {
+                const UserIdlogin = req.session.login;
+                const users = await User.find();
+                const user = await User.findById(UserIdlogin);
+                const reqForms = await requestedForm.find();
+                const vehicle = await Vehicle.find();
+                const vehicles = await Vehicle.find();
+                res.render('dashboard', {
+                    site_title: SITE_TITLE,
+                    title: 'Dashboard',
+                    users: users,
+                    user: user,
+                    reqForms: reqForms,
+                    messages: req.flash(),
+                    vehicle: vehicle,
+                    vehicles: vehicles,
+                })
+            } else {
+                return res.render('404')
+            }
+        } else {
+            return res.redirect('/login')
+        }
+    } catch (err) {
+        console.log('err:', err)
     }
 }

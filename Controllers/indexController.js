@@ -1,4 +1,4 @@
-const SITE_TITLE = 'Online LGU Katipunan Appointment System'
+const SITE_TITLE = 'Online LGU Katipunan Appointment System';
 const User = require('../models/user');
 const requestedForm = require('../models/request');
 const Vehicle = require('../models/vehicle');
@@ -17,8 +17,8 @@ module.exports.index = async (req,res) => {
             const vehicle = await Vehicle.find();
             const vehicles = await Vehicle.find();
             res.render('index', {
-                site_tile: SITE_TITLE,
-                title: 'dashboard',
+                site_title: SITE_TITLE,
+                title: 'Home',
                 users: users,
                 user: user,
                 reqForm: reqForm,
@@ -50,8 +50,8 @@ module.exports.requests = async(req,res) => {
             const reqForm = await requestedForm.find();
             
             res.render('request_status', {
-                site_tile: SITE_TITLE,
-                title: 'dashboard',
+                site_title: SITE_TITLE,
+                title: 'Requests',
                 users: users,
                 user: user,
                 reqForm: reqForm,
