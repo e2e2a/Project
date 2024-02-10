@@ -19,6 +19,7 @@ module.exports.index = async (req, res) => {
                 res.render('creator', {
                     site_title: SITE_TITLE,
                     title: 'Home',
+                    currentUrl: req.originalUrl,
                     users: users,
                     user: user,
                     reqForm: reqForm,
@@ -121,6 +122,7 @@ module.exports.inventory = async (req, res) => {
             res.render('creator_vehicles', {
                 site_title: SITE_TITLE,
                 title: 'Dashboard',
+                currentUrl: req.originalUrl,
                 user: user,
                 reqForms: reqForms,
                 messages: req.flash(),

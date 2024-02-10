@@ -5,6 +5,7 @@ module.exports.index = (req,res) => {
     res.render('login', {
         site_title: SITE_TITLE,
         title: 'Login',
+        currentUrl: req.originalUrl,
         messages: req.flash(),
     })
 }

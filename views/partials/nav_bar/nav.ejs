@@ -1,4 +1,9 @@
 <!-- HEADER DESKTOP-->
+<%
+function activeClass(link) {
+    return currentUrl === link ? 'active' : '';
+}
+%>
 <header class="header-desktop3 d-none d-lg-block">
     <div class="section__content section__content--p35">
         <div class="header3-wrap">
@@ -9,33 +14,59 @@
             </div>
             <div class="header__navbar">
                 <ul class="list-unstyled">
-                    <li class="has-sub">
-                        <a href="#">
+                    <% if(user.role === 'member') {%>
+                    <li class="has-sub <%= activeClass('/') %> <%= activeClass('/requests') %>">
+                        <a href="#" >
                             <i class="fas fa-tachometer-alt"></i>Dashboard
                             <span class="bot-line"></span>
                         </a>
                         <ul class="header3-sub-list list-unstyled">
                             <li>
-                                <a href="index.html">Dashboard 1</a>
+                                <a href="/" >Home</a>
                             </li>
                             <li>
-                                <a href="index2.html">Dashboard 2</a>
+                                <a href="/requests">Dashboard</a>
                             </li>
-                            <li>
-                                <a href="index3.html">Dashboard 3</a>
-                            </li>
-                            <li>
-                                <a href="index4.html">Dashboard 4</a>
-                            </li>
+                            
                         </ul>
                     </li>
+                    <% } %>
+                    <% if(user.role === 'creator') {%>
+                        <li class="has-sub <%= activeClass('/inventory') %> <%= activeClass('/vehicles') %>">
+                            <a href="#" >
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                                <span class="bot-line"></span>
+                            </a>
+                            <ul class="header3-sub-list list-unstyled">
+                                <li>
+                                    <a href="/vehicles" >Home</a>
+                                </li>
+                                <li>
+                                    <a href="/inventory">Dashboard</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                    <% } %>
+                    <% if(user.role === 'admin') {%>
+                        <li class="has-sub <%= activeClass('/admin') %> <%= activeClass('/dashboard') %>">
+                            <a href="#" >
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                                <span class="bot-line"></span>
+                            </a>
+                            <ul class="header3-sub-list list-unstyled">
+                                <li>
+                                    <a href="/admin" >Home</a>
+                                </li>
+                                <li>
+                                    <a href="/dashboard">Dashboard</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                    <% } %>
                     <li>
-                        <a href="#">
-                            <i class="fas fa-shopping-basket"></i>
-                            <span class="bot-line"></span>eCommerce</a>
-                    </li>
-                    <li>
-                        <a href="table.html">
+                        <a href="">
                             <i class="fas fa-trophy"></i>
                             <span class="bot-line"></span>Features</a>
                     </li>
@@ -45,53 +76,7 @@
                             <span class="bot-line"></span>Pages</a>
                         <ul class="header3-sub-list list-unstyled">
                             <li>
-                                <a href="login.html">Login</a>
-                            </li>
-                            <li>
-                                <a href="register.html">Register</a>
-                            </li>
-                            <li>
-                                <a href="forget-pass.html">Forget Password</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="has-sub">
-                        <a href="#">
-                            <i class="fas fa-desktop"></i>
-                            <span class="bot-line"></span>UI Elements</a>
-                        <ul class="header3-sub-list list-unstyled">
-                            <li>
-                                <a href="button.html">Button</a>
-                            </li>
-                            <li>
-                                <a href="badge.html">Badges</a>
-                            </li>
-                            <li>
-                                <a href="tab.html">Tabs</a>
-                            </li>
-                            <li>
-                                <a href="card.html">Cards</a>
-                            </li>
-                            <li>
-                                <a href="alert.html">Alerts</a>
-                            </li>
-                            <li>
-                                <a href="progress-bar.html">Progress Bars</a>
-                            </li>
-                            <li>
-                                <a href="modal.html">Modals</a>
-                            </li>
-                            <li>
-                                <a href="switch.html">Switchs</a>
-                            </li>
-                            <li>
-                                <a href="grid.html">Grids</a>
-                            </li>
-                            <li>
-                                <a href="fontawesome.html">FontAwesome</a>
-                            </li>
-                            <li>
-                                <a href="typo.html">Typography</a>
+                                <a href="/login">Login</a>
                             </li>
                         </ul>
                     </li>

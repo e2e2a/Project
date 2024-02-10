@@ -21,6 +21,7 @@ module.exports.index = async (req, res) => {
                 res.render('admin', {
                     site_title: SITE_TITLE,
                     title: 'Admin',
+                    currentUrl: req.originalUrl,
                     users: users,
                     user: user,
                     reqForms: reqForms,
@@ -186,6 +187,7 @@ module.exports.dashboard = async (req, res) => {
                 res.render('dashboard', {
                     site_title: SITE_TITLE,
                     title: 'Dashboard',
+                    currentUrl: req.originalUrl,
                     users: users,
                     user: user,
                     reqForms: reqForms,

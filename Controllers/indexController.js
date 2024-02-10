@@ -19,6 +19,7 @@ module.exports.index = async (req,res) => {
             res.render('index', {
                 site_title: SITE_TITLE,
                 title: 'Home',
+                currentUrl: req.originalUrl,
                 users: users,
                 user: user,
                 reqForm: reqForm,
@@ -52,6 +53,7 @@ module.exports.requests = async(req,res) => {
             res.render('request_status', {
                 site_title: SITE_TITLE,
                 title: 'Requests',
+                currentUrl: req.originalUrl,
                 users: users,
                 user: user,
                 reqForm: reqForm,
